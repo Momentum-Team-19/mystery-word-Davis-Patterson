@@ -19,12 +19,44 @@ def format_time(seconds):
     return formatted_time
 
 
-def select_word(filename):
+def select_word(filename, word_length_setting):
+    length_ranges = {
+        'Xtreme': (20, 22),
+        'Greater': (17, 19),
+        'Longer': (13, 16),
+        'Regular': (9, 12),
+        'Small': (5, 8),
+        'Mini': (2, 4)
+    }
+    min_length, max_length = length_ranges[word_length_setting]
     with open(filename, 'r') as file:
         file = file.read()
     words_list = file.split()
-    random_word = random.choice(words_list)
+    filtered_words = [
+        word for word in words_list if min_length <= len(word) <= max_length]
+    random_word = random.choice(filtered_words)
     return random_word
+
+
+def count_words_by_length(filename):
+    word_counts = {}
+
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                word = line.strip()
+                length = len(word)
+                if length not in word_counts:
+                    word_counts[length] = 0
+                word_counts[length] += 1
+    except FileNotFoundError:
+        print("File not found.")
+        return []
+
+    sorted_counts = sorted(word_counts.items(), reverse=True)
+    result = [f"{length} letter words: {count}" for length,
+              count in sorted_counts]
+    return result
 
 
 def display_letters(word, guessed_letters):
@@ -62,6 +94,10 @@ def user_guess(counter, guessed_letters, random_word, display):
 
         guess = input('Guess a letter: > ').lower().strip()
         sleep('...')
+        if guess.lower() == 'ex':
+            print('//EXITING CURRENT GAME//')
+            sleep('...')
+            return None
         if len(guess) > 1:
             print('Please enter only (1) letter at a time!\n')
             sleep('...')
@@ -84,7 +120,7 @@ def user_guess(counter, guessed_letters, random_word, display):
             return guess
 
 
-def play_game(score_history, high_score):
+def play_game(filename, score_history, high_score, word_length_setting):
     play = True
     game_number = 0
 
@@ -162,14 +198,30 @@ def play_game(score_history, high_score):
         "All hail the word master!",
     ]
 
+    length_ranges = {
+        'Xtreme': (20, 22),
+        'Greater': (17, 19),
+        'Longer': (13, 16),
+        'Regular': (9, 12),
+        'Small': (5, 8),
+        'Mini': (2, 4)
+    }
+
     print('\nHey there! Try to guess all the letters in the secret word before your guesses run out!\n')
+    print(
+        f"The word length setting is currently set to: \n \n~~ {word_length_setting} ~~\n \nThis setting will have words with {length_ranges[word_length_setting][0]} to {length_ranges[word_length_setting][1]} letters.\nReturn to the main menu to change the word length setting.\n \n[EX]it to return to the main menu or reset the game.")
+    sleep('...')
+
     while play:
         game_number += 1
-        random_word = select_word('test-word.txt')
+        random_word = select_word(filename, word_length_setting)
         guessed_letters = []
         counter = 8
 
         start_time = time.time()  # record the start time
+
+        # print(random_word)
+        print()
 
         while counter > 0:
             display = display_letters(random_word, guessed_letters)
@@ -207,6 +259,10 @@ def play_game(score_history, high_score):
 
             guess = user_guess(counter, guessed_letters, random_word, display)
 
+            if guess is None:
+                play = False
+                break
+
             if guess in random_word and guess.upper() not in guessed_letters:
                 congrats_message = random.choice(congrats_statements)
                 print(f'{congrats_message} You guessed "{guess.upper()}" correctly!')
@@ -218,8 +274,8 @@ def play_game(score_history, high_score):
                 print(
                     f"{dissapoint_message} '{guess.upper()}' is not in the secret word :(")
                 sleep('...')
-                counter -= 1
                 guessed_letters.append(guess.upper())
+                counter -= 1
 
         else:
             end_time = time.time()  # Record the end time
@@ -244,6 +300,7 @@ def play_game(score_history, high_score):
                     "'F' pressed.\nYou have paid respects.\nPlease enter 'yes' or 'no'.")
                 sleep('...')
             elif play_again.lower() == 'y':
+                play = True
                 print('Okay!\nResetting the game!')
                 sleep('...')
                 print('Guessed Letters = 0\nCounter = 8\n \nReady to go!!')
@@ -254,15 +311,18 @@ def play_game(score_history, high_score):
             else:
                 print("Please enter either 'yes' or 'no'")
                 sleep('...')
-    return high_score
+        if not play:
+            return high_score
 
 
 def main_menu():
+    filename = 'words.txt'
     score_history = {}
     high_score = None
+    word_length_setting = 'Regular'
     while True:
         print(
-            "\n~~ MAIN MENU ~~\n \nOptions:\n[P]lay the game\n[C]heck high score\n[V]iew score history\n[E]xit the game\n")
+            "\n~~ MAIN MENU ~~\n \nOptions:\n[P]lay the game\n[C]heck high score\n[V]iew score history\n[L]ength setting\n[T]ools\n[E]xit the game\n")
 
         choice = input('Choose an option: > ').lower().strip()
 
@@ -270,7 +330,8 @@ def main_menu():
             sleep('...')
             print('//Initializing game//')
             sleep('...')
-            high_score = play_game(score_history, high_score)
+            high_score = play_game(
+                filename, score_history, high_score, word_length_setting)
             sleep('...')
 
         elif choice == 'c':
@@ -290,6 +351,101 @@ def main_menu():
             print("\n--- End of Score History ---")
             sleep('...')
 
+        elif choice == 'l':
+            choice_flag = True
+            sleep('...')
+            print('//WORD LENGTH SETTINGS//')
+            sleep('...')
+            print(
+                f'The word length is currently set to: \n \n~~ {word_length_setting} ~~\n \n')
+            while choice_flag:
+                maybe_change = input(
+                    'Would you like to change the word length? (y/n) > ').lower().strip()
+                if maybe_change == 'y':
+                    sleep('...')
+                    while True:
+                        print(
+                            'Word Lengths:\n[X]treme  | (20-22 letters)\n[G]reater | (17-19 letters)\n[L]onger  | (13-16 letters)\n[R]egular | (9-12 letters)\n[S]mall   | (5-8 letters)\n[M]ini    | (2-4 letters)\n \nOr:\n[C]ancel\n')
+                        len_change = input(
+                            'Select word length: > ').lower().strip()
+
+                        if len_change == 'x':
+                            sleep('...')
+                            word_length_setting = 'Xtreme'
+                            choice_flag = False
+                            print(
+                                f'The Word Length Setting has been set to: {word_length_setting}')
+                            sleep('...')
+                            break
+
+                        elif len_change == 'g':
+                            sleep('...')
+                            word_length_setting = 'Greater'
+                            choice_flag = False
+                            print(
+                                f'The Word Length Setting has been set to: {word_length_setting}')
+                            sleep('...')
+                            break
+
+                        elif len_change == 'l':
+                            sleep('...')
+                            word_length_setting = 'Longer'
+                            choice_flag = False
+                            print(
+                                f'The Word Length Setting has been set to: {word_length_setting}')
+                            sleep('...')
+                            break
+
+                        elif len_change == 'r':
+                            sleep('...')
+                            word_length_setting = 'Regular'
+                            choice_flag = False
+                            print(
+                                f'The Word Length Setting has been set to: {word_length_setting}')
+                            sleep('...')
+                            break
+
+                        elif len_change == 's':
+                            sleep('...')
+                            word_length_setting = 'Small'
+                            choice_flag = False
+                            print(
+                                f'The Word Length Setting has been set to: {word_length_setting}')
+                            sleep('...')
+                            break
+
+                        elif len_change == 'm':
+                            sleep('...')
+                            word_length_setting = 'Mini'
+                            choice_flag = False
+                            print(
+                                f'The Word Length Setting has been set to: \n \n~~ {word_length_setting} ~~')
+                            sleep('...')
+                            break
+
+                        elif len_change == 'c':
+                            sleep('...')
+                            choice_flag = False
+                            print('//RETURNING TO MAIN MENU//')
+                            sleep('...')
+                            break
+
+                elif maybe_change == 'n':
+                    sleep('...')
+                    print('//RETURNING TO MENU//')
+                    sleep('...')
+                    break
+
+                elif maybe_change == 'f':
+                    sleep('...')
+                    print("'F' pressed.\nYou have paid respects.")
+                    sleep('...')
+
+                else:
+                    sleep('...')
+                    print('Invalid choice. Please choose (y/n)')
+                    sleep('...')
+
         elif choice == 'f':
             sleep('...')
             print("'F' pressed.\nYou have paid respects.")
@@ -298,6 +454,32 @@ def main_menu():
         elif choice == 'e':
             print('\nThanks for playing!\nSee you again soon!\nGoodbye!')
             break
+
+        elif choice == 't':
+            sleep('...')
+            while True:
+                print(
+                    '//DEVELOPER TOOLS//\n[L]engths of words listed\n[E]xit\n \n')
+                tool_choice = input(
+                    'Choose an option: > ').lower().strip()
+
+                if tool_choice == 'l':
+                    sleep('...')
+                    word_length_counts = count_words_by_length(filename)
+                    print(
+                        'The lengths of the words in this list & how numerous they are:\n')
+                    for length_count in word_length_counts:
+                        print(length_count)
+                    sleep('...')
+
+                elif tool_choice == 'e':
+                    sleep('...')
+                    break
+
+                else:
+                    sleep('...')
+                    print("Invalid choice. Please choose one of the options listed.")
+                    sleep('...')
 
         else:
             sleep('...')
