@@ -1,5 +1,20 @@
 import random
 import time
+from anipage import start_screen
+
+hangman_pics = ["  +---+\n  |   |\n      |\n      |\n      |\n      |\n=========",
+
+                "  +---+\n  |   |\n  O   |\n      |\n      |\n      |\n=========",
+
+                "  +---+\n  |   |\n  O   |\n  |   |\n      |\n      |\n=========",
+
+                "  +---+\n  |   |\n  O   |\n /|   |\n      |\n      |\n=========",
+
+                "  +---+\n  |   |\n  O   |\n /|\  |\n      |\n      |\n=========",
+
+                "  +---+\n  |   |\n  O   |\n /|\  |\n /    |\n      |\n=========",
+
+                "  +---+\n  |   |\n  O   |\n /|\  |\n / \  |\n      |\n========="]
 
 
 def sleep(text=None):
@@ -33,7 +48,7 @@ def select_word(filename, word_length_setting):
         file = file.read()
     words_list = file.split()
     filtered_words = [
-        word for word in words_list if min_length <= len(word) <= max_length]
+        word for word in words_list if min_length <= len(word) <= max_length]  # list comprehension, very cool!
     random_word = random.choice(filtered_words)
     return random_word
 
@@ -98,6 +113,9 @@ def user_guess(counter, guessed_letters, random_word, display):
             print('//EXITING CURRENT GAME//')
             sleep('...')
             return None
+        if guess.lower() == random_word.lower():
+            sleep('...')
+            return guess
         if len(guess) > 1:
             print('Please enter only (1) letter at a time!\n')
             sleep('...')
@@ -220,7 +238,7 @@ def play_game(filename, score_history, high_score, word_length_setting):
 
         start_time = time.time()  # record the start time
 
-        # print(random_word)
+        print(random_word)
         print()
 
         while counter > 0:
@@ -228,6 +246,8 @@ def play_game(filename, score_history, high_score, word_length_setting):
             print(f'\n{display}\n')
 
             if '_ ' not in display:
+                # displays victory screen, press 'Q' to quit
+                start_screen()
                 end_time = time.time()  # Record the end time
                 duration = end_time - start_time
                 formatted_time = format_time(duration)
@@ -301,7 +321,7 @@ def play_game(filename, score_history, high_score, word_length_setting):
                 sleep('...')
             elif play_again.lower() == 'y':
                 play = True
-                print('Okay!\nResetting the game!')
+                print('//RESETTING GAME//')
                 sleep('...')
                 print('Guessed Letters = 0\nCounter = 8\n \nReady to go!!')
                 sleep('...')
@@ -459,7 +479,7 @@ def main_menu():
             sleep('...')
             while True:
                 print(
-                    '//DEVELOPER TOOLS//\n[L]engths of words listed\n[E]xit\n \n')
+                    '//DEVELOPER TOOLS//\n \n[L]engths of words listed\n[R]andom word generator\n[E]xit\n \n')
                 tool_choice = input(
                     'Choose an option: > ').lower().strip()
 
@@ -470,6 +490,15 @@ def main_menu():
                         'The lengths of the words in this list & how numerous they are:\n')
                     for length_count in word_length_counts:
                         print(length_count)
+                    sleep('...')
+
+                elif tool_choice == 'r':
+                    sleep('...')
+                    print('//RANDOM WORD GENERATOR//')
+                    random_word = select_word(filename, word_length_setting)
+                    sleep('...')
+                    print(
+                        f'Your current word length is:\n \n~~ {word_length_setting} ~~\n \nRandom word generated:\n \n~~ {random_word} ~~')
                     sleep('...')
 
                 elif tool_choice == 'e':
