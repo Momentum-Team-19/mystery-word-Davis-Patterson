@@ -192,6 +192,16 @@ def select_word(filename, word_length_setting):
     return random_word
 
 
+def load_game_number():
+    with open('game_number.txt', 'r') as file:
+        return int(file.read().strip())
+
+
+def save_game_number(game_number):
+    with open('game_number.txt', 'w') as file:
+        file.write(str(game_number) + '\n')
+
+
 def count_words_by_length(filename):
     word_counts = {}
 
@@ -297,7 +307,7 @@ def user_guess(counter, guessed_letters, random_word, display, game_difficulty):
 
 def play_game(filename, score_history, high_score, word_length_setting, game_difficulty):
     play = True
-    game_number = 0
+    game_number = load_game_number()
     wrong_guesses = 0
 
     congrats_statements = [
@@ -390,6 +400,7 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
 
     while play:
         game_number += 1
+        save_game_number(game_number)
         random_word = select_word(filename, word_length_setting)
         guessed_letters = []
         counter = difficulty_lives[game_difficulty.lower()]
@@ -443,7 +454,7 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
                 end_time = time.time()  # Record the end time
                 duration = end_time - start_time
                 formatted_time = format_time(duration)
-                score_history[f'Game {game_number}'] = f'EXIT: {formatted_time}'
+                score_history[f'Game {game_number}'] = f'EXIT - {formatted_time}'
                 play = False
                 break
 
@@ -509,9 +520,10 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
 
 def main_menu():
     filename = 'words.txt'
-    # score_history = {}
-    with open('saveytime.txt', 'r') as fp:
-        score_history = json.load(fp)
+    score_history = {"Game 1": "EXIT - 1 minutes and 4 seconds",
+                     "Game 2": "WIN - 0 minutes and 16 seconds"}
+    with open("score_history.txt", 'r') as score_history:
+        score_history = json.load(score_history)
     high_score = None
     word_length_setting = 'Regular'
     game_difficulty = 'Regular'
