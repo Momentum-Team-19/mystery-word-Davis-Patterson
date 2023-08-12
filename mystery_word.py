@@ -3,7 +3,82 @@ import time
 from anipage import start_screen
 # from saveytime import
 
-hangman_pics = {
+very_easy_pics = {
+    0: "  +---+\n      |\n      |\n      |\n      |\n      |\n      |\n      |\n      |\n      |\n=========",
+
+    1: "  +---+\n  |   |\n      |\n      |\n      |\n      |\n      |\n      |\n      |\n      |\n=========",
+
+    2: "  +---+\n  |   |\n  O   |\n      |\n      |\n      |\n      |\n      |\n      |\n      |\n=========",
+
+    3: "  +---+\n  |   |\n  O   |\n  |   |\n      |\n      |\n      |\n      |\n      |\n      |\n=========",
+
+    4: "  +---+\n  |   |\n  O   |\n  |   |\n /    |\n      |\n      |\n      |\n      |\n      |\n=========",
+
+    5: "  +---+\n  |   |\n  O   |\n  |   |\n /|   |\n      |\n      |\n      |\n      |\n      |\n=========",
+
+    6: "  +---+\n  |   |\n  O   |\n  |   |\n /|\  |\n      |\n      |\n      |\n      |\n      |\n=========",
+
+    7: "  +---+\n  |   |\n  O   |\n  |   |\n /|\  |\n|     |\n      |\n      |\n      |\n      |\n=========",
+
+    8: "  +---+\n  |   |\n  O   |\n  |   |\n /|\  |\n| |   |\n      |\n      |\n      |\n      |\n=========",
+
+    9: "  +---+\n  |   |\n  O   |\n  |   |\n /|\  |\n| | | |\n      |\n      |\n      |\n      |\n=========",
+
+    10: "  +---+\n  |   |\n  O   |\n  |   |\n /|\  |\n| | | |\n  |   |\n      |\n      |\n      |\n=========",
+
+    11: "  +---+\n  |   |\n  O   |\n  |   |\n /|\  |\n| | | |\n  |   |\n /    |\n      |\n      |\n=========",
+
+    12: "  +---+\n  |   |\n  O   |\n  |   |\n /|\  |\n| | | |\n  |   |\n / \  |\n|     |\n      |\n=========",
+
+    13: "  +---+\n  |   |\n  O   |\n  |   |\n /|\  |\n| | | |\n  |   |\n / \  |\n|   | |\n      |\n========="
+}
+
+easy_pics = {
+    0: "  +---+\n      |\n      |\n      |\n      |\n      |\n      |\n=========",
+
+    1: "  +---+\n  O   |\n      |\n      |\n      |\n      |\n      |\n=========",
+
+    2: "  +---+\n  O   |\n /    |\n      |\n      |\n      |\n      |\n=========",
+
+    3: "  +---+\n  O   |\n /|   |\n      |\n      |\n      |\n      |\n=========",
+
+    4: "  +---+\n  O   |\n /|\  |\n      |\n      |\n      |\n      |\n=========",
+
+    5: "  +---+\n  O   |\n /|\  |\n|     |\n      |\n      |\n      |\n=========",
+
+    6: "  +---+\n  O   |\n /|\  |\n| |   |\n      |\n      |\n      |\n=========",
+
+    7: "  +---+\n  O   |\n /|\  |\n| | | |\n      |\n      |\n      |\n=========",
+
+    8: "  +---+\n  O   |\n /|\  |\n| | | |\n /    |\n      |\n      |\n=========",
+
+    9: "  +---+\n  O   |\n /|\  |\n| | | |\n / \  |\n|     |\n      |\n=========",
+
+    10: "  +---+\n  O   |\n /|\  |\n| | | |\n / \  |\n|   | |\n      |\n========="
+}
+
+medium_pics = {
+    0: "  +---+\n      |\n      |\n      |\n      |\n      |\n=========",
+
+    1: "  +---+\n  O   |\n      |\n      |\n      |\n      |\n=========",
+
+    2: "  +---+\n  O   |\n /    |\n      |\n      |\n      |\n=========",
+
+    3: "  +---+\n  O   |\n /|   |\n      |\n      |\n      |\n=========",
+
+    4: "  +---+\n  O   |\n /|\  |\n      |\n      |\n      |\n=========",
+
+    5: "  +---+\n  O   |\n /|\  |\n|     |\n      |\n      |\n=========",
+
+    6: "  +---+\n  O   |\n /|\  |\n| |   |\n      |\n      |\n=========",
+
+    7: "  +---+\n  O   |\n /|\  |\n| | | |\n      |\n      |\n=========",
+
+    8: "  +---+\n  O   |\n /|\  |\n| | | |\n /    |\n      |\n========="
+
+}
+
+regular_pics = {
     0: "  +---+\n      |\n      |\n      |\n      |\n      |\n=========\n",
 
     1: "  +---+\n  |   |\n      |\n      |\n      |\n      |\n=========\n",
@@ -19,6 +94,40 @@ hangman_pics = {
     6: "  +---+\n  |   |\n  O   |\n /|\  |\n /    |\n      |\n=========\n",
 
     7: "  +---+\n  |   |\n  O   |\n /|\  |\n / \  |\n      |\n=========\n"
+}
+
+hard_pics = {
+    0: "  +---+\n      |\n      |\n      |\n      |\n      |\n=========\n",
+
+    1: "  +---+\n  |   |\n      |\n      |\n      |\n      |\n=========\n",
+
+    2: "  +---+\n  |   |\n  O   |\n      |\n      |\n      |\n=========\n",
+
+    3: "  +---+\n  |   |\n  O   |\n  |   |\n      |\n      |\n=========\n",
+
+    4: "  +---+\n  |   |\n  O   |\n /|\  |\n      |\n      |\n=========\n",
+
+    5: "  +---+\n  |   |\n  O   |\n /|\  |\n / \  |\n      |\n=========\n"
+}
+
+xtra_hard_pics = {
+    0: "  +---+\n      |\n      |\n      |\n      |\n      |\n=========\n",
+
+    1: "  +---+\n  |   |\n  O   |\n      |\n      |\n      |\n=========\n",
+
+    2: "  +---+\n  |   |\n  O   |\n  |   |\n      |\n      |\n=========\n",
+
+    3: "  +---+\n  |   |\n  O   |\n /|\  |\n      |\n      |\n=========\n",
+
+    4: "  +---+\n  |   |\n  O   |\n /|\  |\n / \  |\n      |\n=========\n"
+}
+
+impossible_pics = {
+    0: "  +---+\n  |   |\n  O   |\n      |\n      |\n      |\n=========\n",
+
+    1: "  +---+\n  |   |\n  O   |\n /|\  |\n      |\n      |\n=========\n",
+
+    2: "  +---+\n  |   |\n  O   |\n /|\  |\n / \  |\n      |\n=========\n"
 }
 
 difficulty_lives = {
@@ -242,7 +351,7 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
 
     print('\nHey there! Try to guess all the letters in the secret word before your guesses run out!\n \n')
     print(
-        f"Your current settings are: \n \nWord Length: {word_length_setting}\nGame Difficulty: {game_difficulty}\n \nThese settings will generate words with {length_ranges[word_length_setting][0]} to {length_ranges[word_length_setting][1]} letters.\n{game_difficulty} difficulty allows {difficulty_lives[game_difficulty.lower()]} wrong guesses before [Game Over].\nReturn to the main menu to change settings.\n \n[EX]it to return to the main menu or reset the game.")
+        f"Your current settings are: \n \nWord Length: {word_length_setting}\nGame Difficulty: {game_difficulty}\n \nThese settings will generate words with {length_ranges[word_length_setting][0]} to {length_ranges[word_length_setting][1]} letters.\n{game_difficulty} difficulty allows {difficulty_lives[game_difficulty.lower()]} wrong guesses before GAME OVER.\nReturn to the main menu to change settings.\n \n[EX]it to return to the main menu or reset the game.")
     sleep('...')
 
     while play:
@@ -258,7 +367,21 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
         print()
 
         while counter > 0:
-            print(hangman_pics[wrong_guesses])
+            if game_difficulty == 'Very Easy':
+                print(very_easy_pics[wrong_guesses])
+            elif game_difficulty == 'Easy':
+                print(easy_pics[wrong_guesses])
+            elif game_difficulty == 'Medium':
+                print(medium_pics[wrong_guesses])
+            elif game_difficulty == 'Regular':
+                print(regular_pics[wrong_guesses])
+            elif game_difficulty == 'Hard':
+                print(hard_pics[wrong_guesses])
+            elif game_difficulty == 'Xtra Hard':
+                print(xtra_hard_pics[wrong_guesses])
+            elif game_difficulty == 'Impossible':
+                print(impossible_pics[wrong_guesses])
+
             display = display_letters(random_word, guessed_letters)
             print(f'\n{display}\n')
 
