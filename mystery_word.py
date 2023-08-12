@@ -1,5 +1,6 @@
 import random
 import time
+import json
 from anipage import start_screen
 # from saveytime import
 
@@ -30,7 +31,9 @@ very_easy_pics = {
 
     12: "  +---+\n  |   |\n  O   |\n  |   |\n /|\  |\n| | | |\n  |   |\n / \  |\n|     |\n      |\n=========",
 
-    13: "  +---+\n  |   |\n  O   |\n  |   |\n /|\  |\n| | | |\n  |   |\n / \  |\n|   | |\n      |\n========="
+    13: "  +---+\n  |   |\n  O   |\n  |   |\n /|\  |\n| | | |\n  |   |\n / \  |\n|   | |\n      |\n=========",
+
+    14: "  +---+\n  |   |\n  O   |\n  |   |\n /|\  |\n| | | |\n  |   |\n / \  |\n|   | |\n      |\n========="
 }
 
 easy_pics = {
@@ -54,7 +57,9 @@ easy_pics = {
 
     9: "  +---+\n  O   |\n /|\  |\n| | | |\n / \  |\n|     |\n      |\n=========",
 
-    10: "  +---+\n  O   |\n /|\  |\n| | | |\n / \  |\n|   | |\n      |\n========="
+    10: "  +---+\n  O   |\n /|\  |\n| | | |\n / \  |\n|   | |\n      |\n=========",
+
+    11: "  +---+\n  O   |\n /|\  |\n| | | |\n / \  |\n|   | |\n      |\n========="
 }
 
 medium_pics = {
@@ -74,7 +79,9 @@ medium_pics = {
 
     7: "  +---+\n  O   |\n /|\  |\n| | | |\n      |\n      |\n=========",
 
-    8: "  +---+\n  O   |\n /|\  |\n| | | |\n /    |\n      |\n========="
+    8: "  +---+\n  O   |\n /|\  |\n| | | |\n /    |\n      |\n=========",
+
+    9: "  +---+\n  O   |\n /|\  |\n| | | |\n /    |\n      |\n========="
 
 }
 
@@ -93,7 +100,9 @@ regular_pics = {
 
     6: "  +---+\n  |   |\n  O   |\n /|\  |\n /    |\n      |\n=========\n",
 
-    7: "  +---+\n  |   |\n  O   |\n /|\  |\n / \  |\n      |\n=========\n"
+    7: "  +---+\n  |   |\n  O   |\n /|\  |\n / \  |\n      |\n=========\n",
+
+    8: "  +---+\n  |   |\n  O   |\n /|\  |\n / \  |\n      |\n=========\n"
 }
 
 hard_pics = {
@@ -107,7 +116,9 @@ hard_pics = {
 
     4: "  +---+\n  |   |\n  O   |\n /|\  |\n      |\n      |\n=========\n",
 
-    5: "  +---+\n  |   |\n  O   |\n /|\  |\n / \  |\n      |\n=========\n"
+    5: "  +---+\n  |   |\n  O   |\n /|\  |\n / \  |\n      |\n=========\n",
+
+    6: "  +---+\n  |   |\n  O   |\n /|\  |\n / \  |\n      |\n=========\n"
 }
 
 xtra_hard_pics = {
@@ -119,15 +130,19 @@ xtra_hard_pics = {
 
     3: "  +---+\n  |   |\n  O   |\n /|\  |\n      |\n      |\n=========\n",
 
-    4: "  +---+\n  |   |\n  O   |\n /|\  |\n / \  |\n      |\n=========\n"
+    4: "  +---+\n  |   |\n  O   |\n /|\  |\n / \  |\n      |\n=========\n",
+
+    5: "  +---+\n  |   |\n  O   |\n /|\  |\n / \  |\n      |\n=========\n"
 }
 
 impossible_pics = {
-    0: "  +---+\n  |   |\n  O   |\n      |\n      |\n      |\n=========\n",
+    0: "  +---+\n      |\n      |\n      |\n      |\n      |\n=========\n",
 
-    1: "  +---+\n  |   |\n  O   |\n /|\  |\n      |\n      |\n=========\n",
+    1: "  +---+\n  |   |\n  O   |\n      |\n      |\n      |\n=========\n",
 
-    2: "  +---+\n  |   |\n  O   |\n /|\  |\n / \  |\n      |\n=========\n"
+    2: "  +---+\n  |   |\n  O   |\n /|\  |\n      |\n      |\n=========\n",
+
+    3: "  +---+\n  |   |\n  O   |\n /|\  |\n / \  |\n      |\n=========\n"
 }
 
 difficulty_lives = {
@@ -198,7 +213,22 @@ def count_words_by_length(filename):
     return result
 
 
-def display_letters(word, guessed_letters):
+def display_letters(word, guessed_letters, game_difficulty, wrong_guesses):
+    if game_difficulty == 'Very Easy':
+        print(very_easy_pics[wrong_guesses])
+    elif game_difficulty == 'Easy':
+        print(easy_pics[wrong_guesses])
+    elif game_difficulty == 'Medium':
+        print(medium_pics[wrong_guesses])
+    elif game_difficulty == 'Regular':
+        print(regular_pics[wrong_guesses])
+    elif game_difficulty == 'Hard':
+        print(hard_pics[wrong_guesses])
+    elif game_difficulty == 'Xtra Hard':
+        print(xtra_hard_pics[wrong_guesses])
+    elif game_difficulty == 'Impossible':
+        print(impossible_pics[wrong_guesses])
+    print()
     chosen_word = ''
     for letter in word:
         if letter.upper() in guessed_letters:
@@ -214,10 +244,13 @@ def user_guess(counter, guessed_letters, random_word, display, game_difficulty):
     while counter > 0:
         if counter == difficulty_lives[game_difficulty.lower()] and len(guessed_letters) == 0:
             print(f'You have {counter} guesses remaining!!')
-        if counter < difficulty_lives[game_difficulty.lower()] and counter > 0:
-            print(f'You only have {counter} guesses remaining!!')
+        if counter < difficulty_lives[game_difficulty.lower()] and counter > 1:
+            print(f'You only have {counter} wrong attempts remaining!!')
+        if counter == 1:
+            print(
+                f'Last chance!! You have {counter} wrong attempts remaining!!')
         if counter == difficulty_lives[game_difficulty.lower()] and len(guessed_letters) > 0:
-            print(f'You still have {counter} guesses remaining!!')
+            print(f'You still have {counter} wrong attempts remaining!!')
 
         formatted_multi_guesses = ', '.join(
             guessed_letters[:-1]) + ' & ' + guessed_letters[-1] if len(guessed_letters) > 1 else ''
@@ -240,8 +273,8 @@ def user_guess(counter, guessed_letters, random_word, display, game_difficulty):
         if guess.lower() == random_word.lower():
             sleep('...')
             return guess
-        if len(guess) > 1:
-            print('Please enter only (1) letter at a time!\n')
+        elif len(guess) > 1:
+            print('Please enter only (1) letter at a time!')
             sleep('...')
             print(f'\n{display}\n')
         if not guess.isalpha():
@@ -259,12 +292,13 @@ def user_guess(counter, guessed_letters, random_word, display, game_difficulty):
             return guess
 
         else:
-            return guess
+            return guess[0]
 
 
 def play_game(filename, score_history, high_score, word_length_setting, game_difficulty):
     play = True
     game_number = 0
+    wrong_guesses = 0
 
     congrats_statements = [
         "Great job!",
@@ -351,12 +385,11 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
 
     print('\nHey there! Try to guess all the letters in the secret word before your guesses run out!\n \n')
     print(
-        f"Your current settings are: \n \nWord Length: {word_length_setting}\nGame Difficulty: {game_difficulty}\n \nThese settings will generate words with {length_ranges[word_length_setting][0]} to {length_ranges[word_length_setting][1]} letters.\n{game_difficulty} difficulty allows {difficulty_lives[game_difficulty.lower()]} wrong guesses before GAME OVER.\nReturn to the main menu to change settings.\n \n[EX]it to return to the main menu or reset the game.")
+        f"Your current settings are: \n \nWord Length: {word_length_setting}\nGame Difficulty: {game_difficulty}\n \n{word_length_setting} length will generate words with {length_ranges[word_length_setting][0]} to {length_ranges[word_length_setting][1]} letters.\n{game_difficulty} difficulty allows {difficulty_lives[game_difficulty.lower()]} wrong guesses before GAME OVER.\nReturn to the main menu to change settings.\n \n[EX]it to return to the main menu or reset the game.")
     sleep('...')
 
     while play:
         game_number += 1
-        wrong_guesses = 0
         random_word = select_word(filename, word_length_setting)
         guessed_letters = []
         counter = difficulty_lives[game_difficulty.lower()]
@@ -367,22 +400,8 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
         print()
 
         while counter > 0:
-            if game_difficulty == 'Very Easy':
-                print(very_easy_pics[wrong_guesses])
-            elif game_difficulty == 'Easy':
-                print(easy_pics[wrong_guesses])
-            elif game_difficulty == 'Medium':
-                print(medium_pics[wrong_guesses])
-            elif game_difficulty == 'Regular':
-                print(regular_pics[wrong_guesses])
-            elif game_difficulty == 'Hard':
-                print(hard_pics[wrong_guesses])
-            elif game_difficulty == 'Xtra Hard':
-                print(xtra_hard_pics[wrong_guesses])
-            elif game_difficulty == 'Impossible':
-                print(impossible_pics[wrong_guesses])
-
-            display = display_letters(random_word, guessed_letters)
+            display = display_letters(
+                random_word, guessed_letters, game_difficulty, wrong_guesses)
             print(f'\n{display}\n')
 
             if '_ ' not in display:
@@ -421,6 +440,10 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
                                random_word, display, game_difficulty)
 
             if guess is None:
+                end_time = time.time()  # Record the end time
+                duration = end_time - start_time
+                formatted_time = format_time(duration)
+                score_history[f'Game {game_number}'] = f'EXIT: {formatted_time}'
                 play = False
                 break
 
@@ -443,7 +466,13 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
             end_time = time.time()  # Record the end time
             duration = end_time - start_time
             formatted_time = format_time(duration)
-            print(f'[GAME OVER]\n \nThe correct word was: {random_word} :(')
+
+            display = display_letters(
+                random_word, guessed_letters, game_difficulty, wrong_guesses)
+            formatted_word = random_word[0].upper(
+            ) + random_word[1:].lower()
+            print(
+                f'\n{display}\n \n[GAME OVER]\n \nThe correct word was: {formatted_word} :(')
             print(f'You played for: {formatted_time}')
             sleep('...')
             # adding to score history dictionary
@@ -469,6 +498,7 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
                 sleep('...')
                 counter = difficulty_lives[game_difficulty.lower()]
                 guessed_letters = []
+                wrong_guesses = 0
                 break
             else:
                 print("Please enter either 'yes' or 'no'")
@@ -479,7 +509,9 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
 
 def main_menu():
     filename = 'words.txt'
-    score_history = {}
+    # score_history = {}
+    with open('saveytime.txt', 'r') as fp:
+        score_history = json.load(fp)
     high_score = None
     word_length_setting = 'Regular'
     game_difficulty = 'Regular'
