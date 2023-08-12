@@ -202,6 +202,26 @@ def save_game_number(game_number):
         file.write(str(game_number) + '\n')
 
 
+def load_score_history():
+    with open("score_history.txt", 'r') as score_history:
+        return json.load(score_history)
+
+
+def save_score_history(score_history):
+    with open('score_history.txt', 'w') as file:
+        json.dump(score_history, file)
+
+
+def load_high_score():
+    with open('high_score.txt', 'r') as file:
+        return float(file.read().strip())
+
+
+def save_high_score(high_score):
+    with open('high_score.txt', 'w') as file:
+        file.write(str(high_score) + '\n')
+
+
 def count_words_by_length(filename):
     word_counts = {}
 
@@ -308,6 +328,7 @@ def user_guess(counter, guessed_letters, random_word, display, game_difficulty):
 def play_game(filename, score_history, high_score, word_length_setting, game_difficulty):
     play = True
     game_number = load_game_number()
+    high_score = load_high_score()
     wrong_guesses = 0
 
     congrats_statements = [
@@ -394,8 +415,9 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
     }
 
     print('\nHey there! Try to guess all the letters in the secret word before your guesses run out!\n \n')
+    score_time = format_time(high_score)
     print(
-        f"Your current settings are: \n \nWord Length: {word_length_setting}\nGame Difficulty: {game_difficulty}\n \n{word_length_setting} length will generate words with {length_ranges[word_length_setting][0]} to {length_ranges[word_length_setting][1]} letters.\n{game_difficulty} difficulty allows {difficulty_lives[game_difficulty.lower()]} wrong guesses before GAME OVER.\nReturn to the main menu to change settings.\n \n[EX]it to return to the main menu or reset the game.")
+        f"Out of {game_number} games played, your high score is \n \n~~ {score_time} ~~\n \nCan you set a new record??\nYour current settings are: \n \nWord Length: {word_length_setting}\nGame Difficulty: {game_difficulty}\n \n{word_length_setting} length will generate words with {length_ranges[word_length_setting][0]} to {length_ranges[word_length_setting][1]} letters.\n{game_difficulty} difficulty allows {difficulty_lives[game_difficulty.lower()]} wrong guesses before GAME OVER.\nReturn to the main menu to change settings.\n \n[EX]it to return to the main menu or reset the game.")
     sleep('...')
 
     while play:
@@ -437,12 +459,15 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
                         f"{record_message} You've just set your first record!\nCheck out 'High Score' to view your fastest time!")
                 elif high_score is not None and duration < high_score:
                     high_score = duration
+                    save_high_score(high_score)
                     record_message = random.choice(record_statements)
                     print(
                         f"{record_message} You just set a *NEW* record!\n'High Score' has been updated with your latest time!")
 
                 # adding to score history dictionary
                 score_history[f'Game {game_number}'] = f'WIN: {formatted_time}'
+                with open('score_history.txt', 'w') as file:
+                    json.dump(score_history, file)
 
                 sleep('...')
                 break
@@ -455,6 +480,8 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
                 duration = end_time - start_time
                 formatted_time = format_time(duration)
                 score_history[f'Game {game_number}'] = f'EXIT - {formatted_time}'
+                with open('score_history.txt', 'w') as file:
+                    json.dump(score_history, file)
                 play = False
                 break
 
@@ -488,6 +515,8 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
             sleep('...')
             # adding to score history dictionary
             score_history[f'Game {game_number}'] = f'LOSS: {formatted_time}'
+            with open('score_history.txt', 'w') as file:
+                json.dump(score_history, file)
 
         while True:
             play_again = input(
@@ -520,11 +549,8 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
 
 def main_menu():
     filename = 'words.txt'
-    score_history = {"Game 1": "EXIT - 1 minutes and 4 seconds",
-                     "Game 2": "WIN - 0 minutes and 16 seconds"}
-    with open("score_history.txt", 'r') as score_history:
-        score_history = json.load(score_history)
-    high_score = None
+    score_history = load_score_history()
+    high_score = load_high_score()
     word_length_setting = 'Regular'
     game_difficulty = 'Regular'
     print('\nWelcome to Hangman!\n')
@@ -538,8 +564,9 @@ def main_menu():
             sleep('...')
             print('//Initializing game//')
             sleep('...')
-            high_score = play_game(
+            new_high_score = play_game(
                 filename, score_history, high_score, word_length_setting, game_difficulty)
+            save_high_score(new_high_score)
             sleep('...')
 
         elif choice == 'c':
@@ -548,6 +575,7 @@ def main_menu():
                 print('No record has been set yet.')
             else:
                 formatted_time = format_time(high_score)
+                # print(high_score)
                 print(f'The current record is: \n{formatted_time}')
             sleep('...')
 
