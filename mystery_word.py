@@ -1,30 +1,43 @@
 import random
 import time
 from anipage import start_screen
+# from saveytime import
 
-hangman_pics = ["  +---+\n  |   |\n      |\n      |\n      |\n      |\n=========",
+hangman_pics = {
+    'first': "  +---+\n  |   |\n      |\n      |\n      |\n      |\n=========",
 
-                "  +---+\n  |   |\n  O   |\n      |\n      |\n      |\n=========",
+    'second': "  +---+\n  |   |\n  O   |\n      |\n      |\n      |\n=========",
 
-                "  +---+\n  |   |\n  O   |\n  |   |\n      |\n      |\n=========",
+    'third': "  +---+\n  |   |\n  O   |\n  |   |\n      |\n      |\n=========",
 
-                "  +---+\n  |   |\n  O   |\n /|   |\n      |\n      |\n=========",
+    'fourth': "  +---+\n  |   |\n  O   |\n /|   |\n      |\n      |\n=========",
 
-                "  +---+\n  |   |\n  O   |\n /|\  |\n      |\n      |\n=========",
+    'fifth': "  +---+\n  |   |\n  O   |\n /|\  |\n      |\n      |\n=========",
 
-                "  +---+\n  |   |\n  O   |\n /|\  |\n /    |\n      |\n=========",
+    'sixth': "  +---+\n  |   |\n  O   |\n /|\  |\n /    |\n      |\n=========",
 
-                "  +---+\n  |   |\n  O   |\n /|\  |\n / \  |\n      |\n========="]
+    'seventh': "  +---+\n  |   |\n  O   |\n /|\  |\n / \  |\n      |\n========="
+}
+
+difficulty_lives = {
+    'very easy': 15,
+    'easy': 12,
+    'medium': 10,
+    'regular': 8,
+    'hard': 6,
+    'xtra hard': 5,
+    'impossible': 3
+}
 
 
 def sleep(text=None):
     if text is None:
-        time.sleep(.6)
+        time.sleep(.5)
         print()
     else:
         time.sleep(.2)
         print(f'\n{text}\n')
-        time.sleep(.6)
+        time.sleep(.3)
 
 
 def format_time(seconds):
@@ -86,13 +99,13 @@ def display_letters(word, guessed_letters):
     return chosen_word
 
 
-def user_guess(counter, guessed_letters, random_word, display):
+def user_guess(counter, guessed_letters, random_word, display, game_difficulty):
     while counter > 0:
-        if counter == 8 and len(guessed_letters) == 0:
+        if counter == difficulty_lives[game_difficulty.lower()] and len(guessed_letters) == 0:
             print(f'You have {counter} guesses remaining!!')
-        if counter < 8 and counter > 0:
+        if counter < difficulty_lives[game_difficulty.lower()] and counter > 0:
             print(f'You only have {counter} guesses remaining!!')
-        if counter == 8 and len(guessed_letters) > 0:
+        if counter == difficulty_lives[game_difficulty.lower()] and len(guessed_letters) > 0:
             print(f'You still have {counter} guesses remaining!!')
 
         formatted_multi_guesses = ', '.join(
@@ -138,7 +151,7 @@ def user_guess(counter, guessed_letters, random_word, display):
             return guess
 
 
-def play_game(filename, score_history, high_score, word_length_setting):
+def play_game(filename, score_history, high_score, word_length_setting, game_difficulty):
     play = True
     game_number = 0
 
@@ -225,16 +238,16 @@ def play_game(filename, score_history, high_score, word_length_setting):
         'Mini': (2, 4)
     }
 
-    print('\nHey there! Try to guess all the letters in the secret word before your guesses run out!\n')
+    print('\nHey there! Try to guess all the letters in the secret word before your guesses run out!\n \n')
     print(
-        f"The word length setting is currently set to: \n \n~~ {word_length_setting} ~~\n \nThis setting will have words with {length_ranges[word_length_setting][0]} to {length_ranges[word_length_setting][1]} letters.\nReturn to the main menu to change the word length setting.\n \n[EX]it to return to the main menu or reset the game.")
+        f"Your current settings are: \n \nWord Length: {word_length_setting}\nGame Difficulty: {game_difficulty}\n \nThese settings will generate words with {length_ranges[word_length_setting][0]} to {length_ranges[word_length_setting][1]} letters.\n{game_difficulty} difficulty allows {difficulty_lives[game_difficulty.lower()]} wrong guesses before [Game Over].\nReturn to the main menu to change settings.\n \n[EX]it to return to the main menu or reset the game.")
     sleep('...')
 
     while play:
         game_number += 1
         random_word = select_word(filename, word_length_setting)
         guessed_letters = []
-        counter = 8
+        counter = difficulty_lives[game_difficulty.lower()]
 
         start_time = time.time()  # record the start time
 
@@ -277,7 +290,8 @@ def play_game(filename, score_history, high_score, word_length_setting):
                 sleep('...')
                 break
 
-            guess = user_guess(counter, guessed_letters, random_word, display)
+            guess = user_guess(counter, guessed_letters,
+                               random_word, display, game_difficulty)
 
             if guess is None:
                 play = False
@@ -301,7 +315,7 @@ def play_game(filename, score_history, high_score, word_length_setting):
             end_time = time.time()  # Record the end time
             duration = end_time - start_time
             formatted_time = format_time(duration)
-            print(f'Game Over :(\n \nThe correct word was: {random_word}')
+            print(f'[GAME OVER]\n \nThe correct word was: {random_word} :(')
             print(f'You played for: {formatted_time}')
             sleep('...')
             # adding to score history dictionary
@@ -325,7 +339,7 @@ def play_game(filename, score_history, high_score, word_length_setting):
                 sleep('...')
                 print('Guessed Letters = 0\nCounter = 8\n \nReady to go!!')
                 sleep('...')
-                counter = 8
+                counter = difficulty_lives[game_difficulty.lower()]
                 guessed_letters = []
                 break
             else:
@@ -340,9 +354,11 @@ def main_menu():
     score_history = {}
     high_score = None
     word_length_setting = 'Regular'
+    game_difficulty = 'Regular'
+    print('\nWelcome to Hangman!\n')
     while True:
         print(
-            "\n~~ MAIN MENU ~~\n \nOptions:\n[P]lay the game\n[C]heck high score\n[V]iew score history\n[L]ength setting\n[T]ools\n[E]xit the game\n")
+            "\n~~ MAIN MENU ~~\n \nOptions:\n[P]lay the game\n[C]heck high score\n[V]iew score history\n[S]ettings\n[T]ools\n[E]xit the game\n")
 
         choice = input('Choose an option: > ').lower().strip()
 
@@ -351,7 +367,7 @@ def main_menu():
             print('//Initializing game//')
             sleep('...')
             high_score = play_game(
-                filename, score_history, high_score, word_length_setting)
+                filename, score_history, high_score, word_length_setting, game_difficulty)
             sleep('...')
 
         elif choice == 'c':
@@ -371,100 +387,222 @@ def main_menu():
             print("\n--- End of Score History ---")
             sleep('...')
 
-        elif choice == 'l':
-            choice_flag = True
+        elif choice == 's':
+            game_setting_flag = True
             sleep('...')
-            print('//WORD LENGTH SETTINGS//')
+            print('//GAME SETTINGS//')
             sleep('...')
             print(
-                f'The word length is currently set to: \n \n~~ {word_length_setting} ~~\n \n')
-            while choice_flag:
-                maybe_change = input(
-                    'Would you like to change the word length? (y/n) > ').lower().strip()
-                if maybe_change == 'y':
+                'Options:\n[L]ength setting\n[D]ifficulty setting\n[E]xit\n')
+            while game_setting_flag:
+                setting_choice = input('Select an option: > ').lower().strip()
+
+                if setting_choice == 'l':
+                    choice_flag = True
                     sleep('...')
-                    while True:
-                        print(
-                            'Word Lengths:\n[X]treme  | (20-22 letters)\n[G]reater | (17-19 letters)\n[L]onger  | (13-16 letters)\n[R]egular | (9-12 letters)\n[S]mall   | (5-8 letters)\n[M]ini    | (2-4 letters)\n \nOr:\n[C]ancel\n')
-                        len_change = input(
-                            'Select word length: > ').lower().strip()
+                    print('//WORD LENGTH SETTINGS//')
+                    sleep('...')
+                    print(
+                        f'Word Lengths:\n[X]treme  | (20-22 letters)\n[G]reater | (17-19 letters)\n[L]onger  | (13-16 letters)\n[R]egular | (9-12 letters)\n[S]mall   | (5-8 letters)\n[M]ini    | (2-4 letters)\n \n \nThe word length is currently set to: \n \n~~ {word_length_setting} ~~\n')
+                    while choice_flag:
+                        maybe_change = input(
+                            'Would you like to change the word length? (y/n) > ').lower().strip()
+                        if maybe_change == 'y':
+                            sleep('...')
+                            while True:
+                                len_change = input(
+                                    'Select new word length: > ').lower().strip()
 
-                        if len_change == 'x':
+                                if len_change == 'x':
+                                    sleep('...')
+                                    word_length_setting = 'Xtreme'
+                                    choice_flag = False
+                                    print(
+                                        f'The Word Length Setting has been set to: {word_length_setting}')
+                                    sleep('...')
+                                    game_setting_flag = False
+                                    break
+
+                                elif len_change == 'g':
+                                    sleep('...')
+                                    word_length_setting = 'Greater'
+                                    choice_flag = False
+                                    print(
+                                        f'The Word Length Setting has been set to: {word_length_setting}')
+                                    sleep('...')
+                                    game_setting_flag = False
+                                    break
+
+                                elif len_change == 'l':
+                                    sleep('...')
+                                    word_length_setting = 'Longer'
+                                    choice_flag = False
+                                    print(
+                                        f'The Word Length Setting has been set to: {word_length_setting}')
+                                    sleep('...')
+                                    game_setting_flag = False
+                                    break
+
+                                elif len_change == 'r':
+                                    sleep('...')
+                                    word_length_setting = 'Regular'
+                                    choice_flag = False
+                                    print(
+                                        f'The Word Length Setting has been set to: {word_length_setting}')
+                                    sleep('...')
+                                    game_setting_flag = False
+                                    break
+
+                                elif len_change == 's':
+                                    sleep('...')
+                                    word_length_setting = 'Small'
+                                    choice_flag = False
+                                    print(
+                                        f'The Word Length Setting has been set to: {word_length_setting}')
+                                    sleep('...')
+                                    game_setting_flag = False
+                                    break
+
+                                elif len_change == 'm':
+                                    sleep('...')
+                                    word_length_setting = 'Mini'
+                                    choice_flag = False
+                                    print(
+                                        f'The Word Length Setting has been set to: \n \n~~ {word_length_setting} ~~')
+                                    sleep('...')
+                                    game_setting_flag = False
+                                    break
+
+                        elif maybe_change == 'n':
                             sleep('...')
-                            word_length_setting = 'Xtreme'
-                            choice_flag = False
-                            print(
-                                f'The Word Length Setting has been set to: {word_length_setting}')
+                            print('//RETURNING TO MENU//')
                             sleep('...')
+                            game_setting_flag = False
                             break
 
-                        elif len_change == 'g':
+                        elif maybe_change == 'f':
                             sleep('...')
-                            word_length_setting = 'Greater'
-                            choice_flag = False
-                            print(
-                                f'The Word Length Setting has been set to: {word_length_setting}')
+                            print("'F' pressed.\nYou have paid respects.")
                             sleep('...')
+
+                        else:
+                            sleep('...')
+                            print('Invalid choice. Please choose (y/n)')
+                            sleep('...')
+                    break
+
+                elif setting_choice == 'd':
+                    setting_choice_flag = True
+                    sleep('...')
+                    print('//DIFFICULTY SETTINGS//')
+                    sleep('...')
+                    print(
+                        f'Options:\n[V]ery Easy  | (15 Lives)\n[E]asy       | (12 Lives)\n[M]edium     | (10 Lives)\n[R]egular    | (8 Lives)\n[H]ard       | (6 Lives)\n[X]tra Hard  | (5 Lives)\n[I]mpossible | (3 Lives)\n \n \nThe difficutly is currently set to:\n \n~~ {game_difficulty} ~~\n')
+                    while setting_choice_flag:
+                        change_maybe = input(
+                            'Would you like to change the game difficulty? (y/n) > ')
+
+                        if change_maybe == 'y':
+                            sleep('...')
+                            while True:
+                                change_diff = input(
+                                    'Select new game difficulty: > ').lower().strip()
+
+                                if change_diff == 'v':
+                                    sleep('...')
+                                    game_difficulty = 'Very Easy'
+                                    setting_choice_flag = False
+                                    print(
+                                        f'The game difficulty has been set to: {game_difficulty}')
+                                    sleep('...')
+                                    game_setting_flag = False
+                                    break
+
+                                elif change_diff == 'e':
+                                    sleep('...')
+                                    game_difficulty = 'Easy'
+                                    setting_choice_flag = False
+                                    print(
+                                        f'The game difficulty has been set to: {game_difficulty}')
+                                    sleep('...')
+                                    game_setting_flag = False
+                                    break
+
+                                elif change_diff == 'm':
+                                    sleep('...')
+                                    game_difficulty = 'Medium'
+                                    setting_choice_flag = False
+                                    print(
+                                        f'The game difficulty has been set to: {game_difficulty}')
+                                    sleep('...')
+                                    game_setting_flag = False
+                                    break
+
+                                elif change_diff == 'r':
+                                    sleep('...')
+                                    game_difficulty = 'Regular'
+                                    setting_choice_flag = False
+                                    print(
+                                        f'The game difficulty has been set to: {game_difficulty}')
+                                    sleep('...')
+                                    game_setting_flag = False
+                                    break
+
+                                elif change_diff == 'h':
+                                    sleep('...')
+                                    game_difficulty = 'Hard'
+                                    setting_choice_flag = False
+                                    print(
+                                        f'The game difficulty has been set to: {game_difficulty}')
+                                    sleep('...')
+                                    game_setting_flag = False
+                                    break
+
+                                elif change_diff == 'x':
+                                    sleep('...')
+                                    game_difficulty = 'Xtra Hard'
+                                    setting_choice_flag = False
+                                    print(
+                                        f'The game difficulty has been set to: {game_difficulty}')
+                                    sleep('...')
+                                    game_setting_flag = False
+                                    break
+
+                                elif change_diff == 'i':
+                                    sleep('...')
+                                    game_difficulty = 'Impossible'
+                                    setting_choice_flag = False
+                                    print(
+                                        f'The game difficulty has been set to: {game_difficulty}')
+                                    sleep('...')
+                                    game_setting_flag = False
+                                    break
+
+                                else:
+                                    sleep('...')
+                                    print(
+                                        'Invalid choice. Please select an option listed.')
+                                    sleep('...')
+
+                        elif change_maybe == 'n':
+                            sleep('...')
+                            print('//RETURNING TO MENU//')
+                            sleep('...')
+                            setting_choice_flag = False
+                            game_setting_flag = False
                             break
 
-                        elif len_change == 'l':
+                        else:
                             sleep('...')
-                            word_length_setting = 'Longer'
-                            choice_flag = False
-                            print(
-                                f'The Word Length Setting has been set to: {word_length_setting}')
+                            print('Invalid choice. Please choose (y/n)')
                             sleep('...')
-                            break
+                    break
 
-                        elif len_change == 'r':
-                            sleep('...')
-                            word_length_setting = 'Regular'
-                            choice_flag = False
-                            print(
-                                f'The Word Length Setting has been set to: {word_length_setting}')
-                            sleep('...')
-                            break
-
-                        elif len_change == 's':
-                            sleep('...')
-                            word_length_setting = 'Small'
-                            choice_flag = False
-                            print(
-                                f'The Word Length Setting has been set to: {word_length_setting}')
-                            sleep('...')
-                            break
-
-                        elif len_change == 'm':
-                            sleep('...')
-                            word_length_setting = 'Mini'
-                            choice_flag = False
-                            print(
-                                f'The Word Length Setting has been set to: \n \n~~ {word_length_setting} ~~')
-                            sleep('...')
-                            break
-
-                        elif len_change == 'c':
-                            sleep('...')
-                            choice_flag = False
-                            print('//RETURNING TO MAIN MENU//')
-                            sleep('...')
-                            break
-
-                elif maybe_change == 'n':
+                elif setting_choice == 'e':
                     sleep('...')
                     print('//RETURNING TO MENU//')
                     sleep('...')
                     break
-
-                elif maybe_change == 'f':
-                    sleep('...')
-                    print("'F' pressed.\nYou have paid respects.")
-                    sleep('...')
-
-                else:
-                    sleep('...')
-                    print('Invalid choice. Please choose (y/n)')
-                    sleep('...')
 
         elif choice == 'f':
             sleep('...')
