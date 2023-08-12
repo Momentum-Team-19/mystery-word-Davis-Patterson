@@ -4,19 +4,21 @@ from anipage import start_screen
 # from saveytime import
 
 hangman_pics = {
-    'first': "  +---+\n  |   |\n      |\n      |\n      |\n      |\n=========",
+    0: "  +---+\n      |\n      |\n      |\n      |\n      |\n=========\n",
 
-    'second': "  +---+\n  |   |\n  O   |\n      |\n      |\n      |\n=========",
+    1: "  +---+\n  |   |\n      |\n      |\n      |\n      |\n=========\n",
 
-    'third': "  +---+\n  |   |\n  O   |\n  |   |\n      |\n      |\n=========",
+    2: "  +---+\n  |   |\n  O   |\n      |\n      |\n      |\n=========\n",
 
-    'fourth': "  +---+\n  |   |\n  O   |\n /|   |\n      |\n      |\n=========",
+    3: "  +---+\n  |   |\n  O   |\n  |   |\n      |\n      |\n=========\n",
 
-    'fifth': "  +---+\n  |   |\n  O   |\n /|\  |\n      |\n      |\n=========",
+    4: "  +---+\n  |   |\n  O   |\n /|   |\n      |\n      |\n=========\n",
 
-    'sixth': "  +---+\n  |   |\n  O   |\n /|\  |\n /    |\n      |\n=========",
+    5: "  +---+\n  |   |\n  O   |\n /|\  |\n      |\n      |\n=========\n",
 
-    'seventh': "  +---+\n  |   |\n  O   |\n /|\  |\n / \  |\n      |\n========="
+    6: "  +---+\n  |   |\n  O   |\n /|\  |\n /    |\n      |\n=========\n",
+
+    7: "  +---+\n  |   |\n  O   |\n /|\  |\n / \  |\n      |\n=========\n"
 }
 
 difficulty_lives = {
@@ -245,6 +247,7 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
 
     while play:
         game_number += 1
+        wrong_guesses = 0
         random_word = select_word(filename, word_length_setting)
         guessed_letters = []
         counter = difficulty_lives[game_difficulty.lower()]
@@ -255,6 +258,7 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
         print()
 
         while counter > 0:
+            print(hangman_pics[wrong_guesses])
             display = display_letters(random_word, guessed_letters)
             print(f'\n{display}\n')
 
@@ -310,6 +314,7 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
                 sleep('...')
                 guessed_letters.append(guess.upper())
                 counter -= 1
+                wrong_guesses += 1
 
         else:
             end_time = time.time()  # Record the end time
