@@ -1,9 +1,13 @@
 from random import randint
 from asciimatics.screen import Screen
+import time
 
 
 def demo(screen):
-    while True:
+    animation_start_time = time.time()
+    animation_duration = 4
+
+    while time.time() - animation_start_time < animation_duration:
         screen.print_at('Victory!',
                         randint(0, screen.width), randint(0, screen.height),
                         colour=randint(0, screen.colours - 1),
