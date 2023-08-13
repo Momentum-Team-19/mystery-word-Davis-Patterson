@@ -6,7 +6,7 @@ import pyfiglet
 import colorama
 from colorama import Fore, Back, Style
 
-# Line 502 print(random_word)
+# Line 557 print(random_word)
 
 colorama.init(autoreset=True)
 
@@ -546,15 +546,15 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
     sleep()
 
     while play:
-        game_number += 1
-        save_game_number(game_number)
+        # game_number += 1
+        # save_game_number(game_number)
         random_word = select_word(filename, word_length_setting)
         guessed_letters = []
         counter = difficulty_lives[game_difficulty.lower()]
 
         start_time = time.time()  # record the start time
 
-        # print(random_word)
+        print(random_word)
         print()
 
         while counter > 0:
@@ -577,14 +577,14 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
                 print(
                     f"{win_message}\nYou guessed the secret word, {Fore.CYAN}'{formatted_word}'{Fore.WHITE}!")
                 print(
-                    f'It only took you {formatted_time}!')
+                    f'It only took you {Fore.GREEN}{formatted_time}{Fore.WHITE}!')
                 print('...')
 
                 if high_score is None:
                     high_score = duration
                     record_message = random.choice(record_statements)
                     record_text = pyfiglet.figlet_format(
-                        text="New Record", font='ntgreek')
+                        text="New Record", font='puffy')
                     print(record_text)
                     print(
                         f"{record_message} You've just set your first record!\nCheck out 'High Score' to view your fastest time!")
@@ -593,13 +593,15 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
                     save_high_score(high_score)
                     record_message = random.choice(record_statements)
                     record_text = pyfiglet.figlet_format(
-                        text="New Record", font='ogre')
+                        text="New Record", font='puffy')
                     print(record_text)
                     print(
                         f"{record_message} You just set a {Fore.GREEN}*NEW*{Fore.WHITE} record!\n'High Score' has been updated with your latest time!")
 
                 # adding to score history dictionary
-                score_history[f'Game {game_number}'] = f'WIN: {formatted_time}'
+                game_number += 1
+                save_game_number(game_number)
+                score_history[f'Game {game_number}'] = f'WIN - {formatted_time}'
                 with open('score_history.txt', 'w') as file:
                     json.dump(score_history, file)
 
@@ -613,6 +615,8 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
                 end_time = time.time()  # Record the end time
                 duration = end_time - start_time
                 formatted_time = format_time(duration)
+                game_number += 1
+                save_game_number(game_number)
                 score_history[f'Game {game_number}'] = f'EXIT - {formatted_time}'
                 with open('score_history.txt', 'w') as file:
                     json.dump(score_history, file)
@@ -652,7 +656,9 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
             print(f'You played for: {formatted_time}')
             sleep('...')
             # adding to score history dictionary
-            score_history[f'Game {game_number}'] = f'LOSS: {formatted_time}'
+            game_number += 1
+            save_game_number(game_number)
+            score_history[f'Game {game_number}'] = f'LOSS - {formatted_time}'
             with open('score_history.txt', 'w') as file:
                 json.dump(score_history, file)
 
