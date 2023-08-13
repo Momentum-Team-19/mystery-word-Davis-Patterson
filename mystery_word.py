@@ -775,9 +775,9 @@ def main_menu():
     print(f'{Fore.YELLOW}{game_name_text}')
     print()
     print_texture(texture3)
-    print()
+    print('\n')
     print_texture(texture1)
-    print(f'\n')
+    print('\n')
     while True:
         eftiwall_font = pyfiglet.figlet_format(text='9( ajy', font='eftiwall')
         print(f'{eftiwall_font}')
