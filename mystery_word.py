@@ -2,6 +2,7 @@ import random
 import time
 import json
 from anipage import start_screen
+from anipage1 import start_screen1
 import pyfiglet
 import colorama
 from colorama import Fore, Back, Style
@@ -643,17 +644,18 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
             end_time = time.time()  # Record the end time
             duration = end_time - start_time
             formatted_time = format_time(duration)
-
+            start_screen1()
             display = display_letters(
                 random_word, guessed_letters, game_difficulty, wrong_guesses)
             formatted_word = random_word[0].upper(
             ) + random_word[1:].lower()
             print(f'\n{display}\n')
             game_over_text = pyfiglet.figlet_format(
-                text='GAME OVER', font='isometric2', width=50)
+                text='GAME OVER', font='isometric2')
             print(game_over_text)
-            print(f'\nThe correct word was: {formatted_word} :(')
-            print(f'You played for: {formatted_time}')
+            print(
+                f'\nThe correct word was: {Fore.CYAN}{formatted_word}{Fore.WHITE} :(')
+            print(f'You played for: {Fore.RED}{formatted_time}{Fore.WHITE}')
             sleep('...')
             # adding to score history dictionary
             game_number += 1
