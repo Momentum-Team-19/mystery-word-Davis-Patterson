@@ -2,7 +2,11 @@ import random
 import time
 import json
 from anipage import start_screen
-# from saveytime import
+import pyfiglet
+import colorama
+from colorama import Fore, Back, Style
+
+colorama.init(autoreset=True)
 
 very_easy_pics = {
     0: "  +---+\n      |\n      |\n      |\n      |\n      |\n      |\n      |\n      |\n      |\n=========",
@@ -202,6 +206,26 @@ def save_game_number(game_number):
         file.write(str(game_number) + '\n')
 
 
+def load_game_difficulty():
+    with open('game_difficulty.txt', 'r') as file:
+        return str(file.read().strip())
+
+
+def save_game_difficulty(game_difficulty):
+    with open('game_difficulty.txt', 'w') as file:
+        file.write(str(game_difficulty) + '\n')
+
+
+def load_word_length():
+    with open('word_length.txt', 'r') as file:
+        return str(file.read().strip())
+
+
+def save_word_length(word_length):
+    with open('word_length.txt', 'w') as file:
+        file.write(str(word_length) + '\n')
+
+
 def load_score_history():
     with open("score_history.txt", 'r') as score_history:
         return json.load(score_history)
@@ -297,6 +321,9 @@ def user_guess(counter, guessed_letters, random_word, display, game_difficulty):
         guess = input('Guess a letter: > ').lower().strip()
         sleep('...')
         if guess.lower() == 'ex':
+            exiting_game_text = pyfiglet.figlet_format(
+                text="//EXITING GAME//", font='smslant')
+            print(exiting_game_text)
             print('//EXITING CURRENT GAME//')
             sleep('...')
             return None
@@ -316,7 +343,10 @@ def user_guess(counter, guessed_letters, random_word, display, game_difficulty):
             sleep('...')
             print(f'\n{display}\n')
         elif guess.upper() == 'F' and guess.upper() in guessed_letters:
-            print("'F' pressed.\nYou have paid respects.\nPlease guess again.")
+            f_pressed_text = pyfiglet.figlet_format(
+                text="'F' PRESSED", font="standard", width=50)
+            print(f_pressed_text)
+            print("\nYou have paid respects.\nPlease guess again.")
             sleep('...')
         elif guess in random_word and guess not in guessed_letters:
             return guess
@@ -527,12 +557,18 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
                 play = False
                 break
             if play_again.upper() == 'F':
+                f_pressed_text = pyfiglet.figlet_format(
+                    text="'F' PRESSED", font="standard", width=50)
+                print(f_pressed_text)
                 print(
-                    "'F' pressed.\nYou have paid respects.\nPlease enter 'yes' or 'no'.")
+                    "\nYou have paid respects.\nPlease enter 'yes' or 'no'.")
                 sleep('...')
             elif play_again.lower() == 'y':
                 play = True
-                print('//RESETTING GAME//')
+                resetting_game_text = pyfiglet.figlet_format(
+                    text="//RESETTING GAME//", font='smslant')
+                print(resetting_game_text)
+                # print('//RESETTING GAME//')
                 sleep('...')
                 print('Guessed Letters = 0\nCounter = 8\n \nReady to go!!')
                 sleep('...')
@@ -551,9 +587,15 @@ def main_menu():
     filename = 'words.txt'
     score_history = load_score_history()
     high_score = load_high_score()
-    word_length_setting = 'Regular'
-    game_difficulty = 'Regular'
-    print('\nWelcome to Hangman!\n')
+    word_length_setting = load_word_length()
+    game_difficulty = load_game_difficulty()
+    # print('\nWelcome to Hangman!\n')
+    welcome_to_text = pyfiglet.figlet_format(
+        text='Welcome to', font='rectangles', width=50)
+    print(welcome_to_text)
+    game_name_text = pyfiglet.figlet_format(text="Hangman",
+                                            font="ogre",)
+    print(game_name_text)
     while True:
         print(
             "\n~~ MAIN MENU ~~\n \nOptions:\n[P]lay the game\n[C]heck high score\n[V]iew score history\n[S]ettings\n[T]ools\n[E]xit the game\n")
@@ -562,7 +604,9 @@ def main_menu():
 
         if choice == 'p':
             sleep('...')
-            print('//Initializing game//')
+            initializing_game_text = pyfiglet.figlet_format(
+                text="STARTING GAME!", font='smslant')
+            print(initializing_game_text)
             sleep('...')
             new_high_score = play_game(
                 filename, score_history, high_score, word_length_setting, game_difficulty)
@@ -581,7 +625,9 @@ def main_menu():
 
         elif choice == 'v':
             sleep('...')
-            print("--- SCORE HISTORY ---\n")
+            initializing_score_history = pyfiglet.figlet_format(
+                text="--SCORE HISTORY--", font='smslant')
+            print(initializing_score_history)
             for game, duration in score_history.items():
                 print(f"{game}: {duration}")
             print("\n--- End of Score History ---")
@@ -590,7 +636,10 @@ def main_menu():
         elif choice == 's':
             game_setting_flag = True
             sleep('...')
-            print('//GAME SETTINGS//')
+            game_settings_text = pyfiglet.figlet_format(
+                text="GAME SETTINGS", font='smslant')
+            print(game_settings_text)
+            # print('//GAME SETTINGS//')
             sleep('...')
             print(
                 'Options:\n[L]ength setting\n[D]ifficulty setting\n[E]xit\n')
@@ -600,7 +649,10 @@ def main_menu():
                 if setting_choice == 'l':
                     choice_flag = True
                     sleep('...')
-                    print('//WORD LENGTH SETTINGS//')
+                    length_settings_text = pyfiglet.figlet_format(
+                        text="LENGTH SETTINGS", font='smslant')
+                    print(length_settings_text)
+                    # print('//WORD LENGTH SETTINGS//')
                     sleep('...')
                     print(
                         f'Word Lengths:\n[X]treme  | (20-22 letters)\n[G]reater | (17-19 letters)\n[L]onger  | (13-16 letters)\n[R]egular | (9-12 letters)\n[S]mall   | (5-8 letters)\n[M]ini    | (2-4 letters)\n \n \nThe word length is currently set to: \n \n~~ {word_length_setting} ~~\n')
@@ -616,6 +668,7 @@ def main_menu():
                                 if len_change == 'x':
                                     sleep('...')
                                     word_length_setting = 'Xtreme'
+                                    save_word_length(word_length_setting)
                                     choice_flag = False
                                     print(
                                         f'The Word Length Setting has been set to: {word_length_setting}')
@@ -626,6 +679,7 @@ def main_menu():
                                 elif len_change == 'g':
                                     sleep('...')
                                     word_length_setting = 'Greater'
+                                    save_word_length(word_length_setting)
                                     choice_flag = False
                                     print(
                                         f'The Word Length Setting has been set to: {word_length_setting}')
@@ -636,6 +690,7 @@ def main_menu():
                                 elif len_change == 'l':
                                     sleep('...')
                                     word_length_setting = 'Longer'
+                                    save_word_length(word_length_setting)
                                     choice_flag = False
                                     print(
                                         f'The Word Length Setting has been set to: {word_length_setting}')
@@ -646,6 +701,7 @@ def main_menu():
                                 elif len_change == 'r':
                                     sleep('...')
                                     word_length_setting = 'Regular'
+                                    save_word_length(word_length_setting)
                                     choice_flag = False
                                     print(
                                         f'The Word Length Setting has been set to: {word_length_setting}')
@@ -656,6 +712,7 @@ def main_menu():
                                 elif len_change == 's':
                                     sleep('...')
                                     word_length_setting = 'Small'
+                                    save_word_length(word_length_setting)
                                     choice_flag = False
                                     print(
                                         f'The Word Length Setting has been set to: {word_length_setting}')
@@ -666,6 +723,7 @@ def main_menu():
                                 elif len_change == 'm':
                                     sleep('...')
                                     word_length_setting = 'Mini'
+                                    save_word_length(word_length_setting)
                                     choice_flag = False
                                     print(
                                         f'The Word Length Setting has been set to: \n \n~~ {word_length_setting} ~~')
@@ -675,14 +733,20 @@ def main_menu():
 
                         elif maybe_change == 'n':
                             sleep('...')
-                            print('//RETURNING TO MENU//')
+                            return_menu_text = pyfiglet.figlet_format(
+                                text="BACK TO MENU", font='rectangles')
+                            print(return_menu_text)
+                            # print('//RETURNING TO MENU//')
                             sleep('...')
                             game_setting_flag = False
                             break
 
                         elif maybe_change == 'f':
                             sleep('...')
-                            print("'F' pressed.\nYou have paid respects.")
+                            f_pressed_text = pyfiglet.figlet_format(
+                                text="'F' PRESSED", font="standard", width=50)
+                            print(f_pressed_text)
+                            print("\nYou have paid respects.")
                             sleep('...')
 
                         else:
@@ -694,7 +758,10 @@ def main_menu():
                 elif setting_choice == 'd':
                     setting_choice_flag = True
                     sleep('...')
-                    print('//DIFFICULTY SETTINGS//')
+                    difficulty_settings_text = pyfiglet.figlet_format(
+                        text="DIFFICULTY SETTINGS", font='smslant')
+                    print(difficulty_settings_text)
+                    # print('//DIFFICULTY SETTINGS//')
                     sleep('...')
                     print(
                         f'Options:\n[V]ery Easy  | (15 Lives)\n[E]asy       | (12 Lives)\n[M]edium     | (10 Lives)\n[R]egular    | (8 Lives)\n[H]ard       | (6 Lives)\n[X]tra Hard  | (5 Lives)\n[I]mpossible | (3 Lives)\n \n \nThe difficutly is currently set to:\n \n~~ {game_difficulty} ~~\n')
@@ -711,6 +778,7 @@ def main_menu():
                                 if change_diff == 'v':
                                     sleep('...')
                                     game_difficulty = 'Very Easy'
+                                    save_game_difficulty(game_difficulty)
                                     setting_choice_flag = False
                                     print(
                                         f'The game difficulty has been set to: {game_difficulty}')
@@ -721,6 +789,7 @@ def main_menu():
                                 elif change_diff == 'e':
                                     sleep('...')
                                     game_difficulty = 'Easy'
+                                    save_game_difficulty(game_difficulty)
                                     setting_choice_flag = False
                                     print(
                                         f'The game difficulty has been set to: {game_difficulty}')
@@ -731,6 +800,7 @@ def main_menu():
                                 elif change_diff == 'm':
                                     sleep('...')
                                     game_difficulty = 'Medium'
+                                    save_game_difficulty(game_difficulty)
                                     setting_choice_flag = False
                                     print(
                                         f'The game difficulty has been set to: {game_difficulty}')
@@ -741,6 +811,7 @@ def main_menu():
                                 elif change_diff == 'r':
                                     sleep('...')
                                     game_difficulty = 'Regular'
+                                    save_game_difficulty(game_difficulty)
                                     setting_choice_flag = False
                                     print(
                                         f'The game difficulty has been set to: {game_difficulty}')
@@ -751,6 +822,7 @@ def main_menu():
                                 elif change_diff == 'h':
                                     sleep('...')
                                     game_difficulty = 'Hard'
+                                    save_game_difficulty(game_difficulty)
                                     setting_choice_flag = False
                                     print(
                                         f'The game difficulty has been set to: {game_difficulty}')
@@ -761,6 +833,7 @@ def main_menu():
                                 elif change_diff == 'x':
                                     sleep('...')
                                     game_difficulty = 'Xtra Hard'
+                                    save_game_difficulty(game_difficulty)
                                     setting_choice_flag = False
                                     print(
                                         f'The game difficulty has been set to: {game_difficulty}')
@@ -771,6 +844,7 @@ def main_menu():
                                 elif change_diff == 'i':
                                     sleep('...')
                                     game_difficulty = 'Impossible'
+                                    save_game_difficulty(game_difficulty)
                                     setting_choice_flag = False
                                     print(
                                         f'The game difficulty has been set to: {game_difficulty}')
@@ -786,7 +860,10 @@ def main_menu():
 
                         elif change_maybe == 'n':
                             sleep('...')
-                            print('//RETURNING TO MENU//')
+                            return_menu_text = pyfiglet.figlet_format(
+                                text="BACK TO MENU", font='rectangles')
+                            print(return_menu_text)
+                            # print('//RETURNING TO MENU//')
                             sleep('...')
                             setting_choice_flag = False
                             game_setting_flag = False
@@ -800,24 +877,37 @@ def main_menu():
 
                 elif setting_choice == 'e':
                     sleep('...')
-                    print('//RETURNING TO MENU//')
+                    # print('//RETURNING TO MENU//')
+                    return_menu_text = pyfiglet.figlet_format(
+                        text="BACK TO MENU", font='rectangles')
+                    print(return_menu_text)
                     sleep('...')
                     break
 
         elif choice == 'f':
             sleep('...')
-            print("'F' pressed.\nYou have paid respects.")
+            f_pressed_text = pyfiglet.figlet_format(
+                text="'F' PRESSED", font="standard", width=50)
+            print(f_pressed_text)
+            print("\nYou have paid respects.")
             sleep('...')
 
         elif choice == 'e':
-            print('\nThanks for playing!\nSee you again soon!\nGoodbye!')
+            sleep('...')
+            print('\nThanks for playing!\nSee you again soon!\n')
+            goodbye_text = pyfiglet.figlet_format(
+                text='Goodbye!', font='larry3d')
+            print(goodbye_text)
             break
 
         elif choice == 't':
             sleep('...')
             while True:
+                dev_tool_text = pyfiglet.figlet_format(
+                    text='DEVELOPER TOOLS', font='Rectangles', width=50)
+                print(dev_tool_text)
                 print(
-                    '//DEVELOPER TOOLS//\n \n[L]engths of words listed\n[R]andom word generator\n[E]xit\n \n')
+                    '\n \nOptions:\n[L]engths of words listed\n[R]andom word generator\n[E]xit\n \n')
                 tool_choice = input(
                     'Choose an option: > ').lower().strip()
 
@@ -832,7 +922,10 @@ def main_menu():
 
                 elif tool_choice == 'r':
                     sleep('...')
-                    print('//RANDOM WORD GENERATOR//')
+                    random_word_generator = pyfiglet.figlet_format(
+                        text="//RANDOM WORD GENERATOR//", font='smslant')
+                    print(random_word_generator)
+                    # print('//RANDOM WORD GENERATOR//')
                     random_word = select_word(filename, word_length_setting)
                     sleep('...')
                     print(
