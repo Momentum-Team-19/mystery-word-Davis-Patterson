@@ -7,151 +7,154 @@ import pyfiglet
 import colorama
 from colorama import Fore, Back, Style
 
-# Line 557 print(random_word)
+# Line 557 print(launch_code)
 
 colorama.init(autoreset=True)
 
 very_easy_pics = {
-    0: "  +---+\n      |\n      |\n      |\n      |\n      |\n      |\n      |\n      |\n      |\n=========",
+    0: "           ___\n     |     | |\n    / \    | |\n   |--o|===|-|\n   |---|   | |\n  /     \  | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    1: "  +---+\n  |   |\n      |\n      |\n      |\n      |\n      |\n      |\n      |\n      |\n=========",
+    1: "           ___\n           | |\n    / \    | |\n   |--o|===|-|\n   |---|   | |\n  /     \  | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    2: "  +---+\n  |   |\n  O   |\n      |\n      |\n      |\n      |\n      |\n      |\n      |\n=========",
+    2: "           ___\n           | |\n      \    | |\n   |--o|===|-|\n   |---|   | |\n  /     \  | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    3: "  +---+\n  |   |\n  O   |\n  |   |\n      |\n      |\n      |\n      |\n      |\n      |\n=========",
+    3: "           ___\n           | |\n           | |\n    --o|===|-|\n   |---|   | |\n  /     \  | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    4: "  +---+\n  |   |\n  O   |\n  |   |\n /    |\n      |\n      |\n      |\n      |\n      |\n=========",
+    4: "           ___\n           | |\n           | |\n      o|===|-|\n   |---|   | |\n  /     \  | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    5: "  +---+\n  |   |\n  O   |\n  |   |\n /|   |\n      |\n      |\n      |\n      |\n      |\n=========",
+    5: "           ___\n           | |\n           | |\n        ===|-|\n   |---|   | |\n  /     \  | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    6: "  +---+\n  |   |\n  O   |\n  |   |\n /|\  |\n      |\n      |\n      |\n      |\n      |\n=========",
+    6: "           ___\n           | |\n           | |\n        ===|-|\n    ---|   | |\n  /     \  | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    7: "  +---+\n  |   |\n  O   |\n  |   |\n /|\  |\n|     |\n      |\n      |\n      |\n      |\n=========",
+    7: "           ___\n           | |\n           | |\n        ===|-|\n      -|   | |\n  /     \  | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    8: "  +---+\n  |   |\n  O   |\n  |   |\n /|\  |\n| |   |\n      |\n      |\n      |\n      |\n=========",
+    8: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /     \  | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    9: "  +---+\n  |   |\n  O   |\n  |   |\n /|\  |\n| | | |\n      |\n      |\n      |\n      |\n=========",
+    9: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    10: "  +---+\n  |   |\n  O   |\n  |   |\n /|\  |\n| | | |\n  |   |\n      |\n      |\n      |\n=========",
+    10: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U       |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    11: "  +---+\n  |   |\n  O   |\n  |   |\n /|\  |\n| | | |\n  |   |\n /    |\n      |\n      |\n=========",
+    11: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U       |-|\n |       |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    12: "  +---+\n  |   |\n  O   |\n  |   |\n /|\  |\n| | | |\n  |   |\n / \  |\n|     |\n      |\n=========",
+    12: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U       |-|\n |       |=| |\n         | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    13: "  +---+\n  |   |\n  O   |\n  |   |\n /|\  |\n| | | |\n  |   |\n / \  |\n|   | |\n      |\n=========",
+    13: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U       |-|\n |       |=| |\n         | | |\n |___  __  |_|\n  |@| |@|  | |\n___________|_|_",
 
-    14: "  +---+\n  |   |\n  O   |\n  |   |\n /|\  |\n| | | |\n  |   |\n / \  |\n|   | |\n      |\n=========",
+    14: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U       |-|\n |       |=| |\n         | | |\n |___  __  |_|\n  |@|      | |\n___________|_|_",
 
-    15: "  +---+\n  |   |\n  O   |\n  |   |\n /|\  |\n| | | |\n  |   |\n / \  |\n|   | |\n      |\n========="
+    15: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U       |-|\n |       |=| |\n         | | |\n |___  __  |_|\n           | |\n___________|_|_",
 }
 
 easy_pics = {
-    0: "  +---+\n      |\n      |\n      |\n      |\n      |\n      |\n=========",
+    0: "           ___\n     |     | |\n    / \    | |\n   |--o|===|-|\n   |---|   | |\n  /     \  | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    1: "  +---+\n  O   |\n      |\n      |\n      |\n      |\n      |\n=========",
+    1: "           ___\n           | |\n    / \    | |\n   |--o|===|-|\n   |---|   | |\n  /     \  | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    2: "  +---+\n  O   |\n /    |\n      |\n      |\n      |\n      |\n=========",
+    2: "           ___\n           | |\n           | |\n      o|===|-|\n   |---|   | |\n  /     \  | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    3: "  +---+\n  O   |\n /|   |\n      |\n      |\n      |\n      |\n=========",
+    3: "           ___\n           | |\n           | |\n        ===|-|\n    ---|   | |\n  /     \  | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    4: "  +---+\n  O   |\n /|\  |\n      |\n      |\n      |\n      |\n=========",
+    4: "           ___\n           | |\n           | |\n        ===|-|\n      -|   | |\n  /     \  | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    5: "  +---+\n  O   |\n /|\  |\n|     |\n      |\n      |\n      |\n=========",
+    5: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /     \  | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    6: "  +---+\n  O   |\n /|\  |\n| |   |\n      |\n      |\n      |\n=========",
+    6: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    7: "  +---+\n  O   |\n /|\  |\n| | | |\n      |\n      |\n      |\n=========",
+    7: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U       |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    8: "  +---+\n  O   |\n /|\  |\n| | | |\n /    |\n      |\n      |\n=========",
+    8: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U       |-|\n |       |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    9: "  +---+\n  O   |\n /|\  |\n| | | |\n / \  |\n|     |\n      |\n=========",
+    9: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U       |-|\n |       |=| |\n         | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    10: "  +---+\n  O   |\n /|\  |\n| | | |\n / \  |\n|   | |\n      |\n=========",
+    10: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U       |-|\n |       |=| |\n         | | |\n |___  __  |_|\n  |@| |@|  | |\n___________|_|_",
 
-    11: "  +---+\n  O   |\n /|\  |\n| | | |\n / \  |\n|   | |\n      |\n========="
+    11: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U       |-|\n |       |=| |\n         | | |\n |___  __  |_|\n  |@|      | |\n___________|_|_",
+
+    12: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U       |-|\n |       |=| |\n         | | |\n |___  __  |_|\n           | |\n___________|_|_",
 }
 
 medium_pics = {
-    0: "  +---+\n      |\n      |\n      |\n      |\n      |\n=========",
+    0: "           ___\n     |     | |\n    / \    | |\n   |--o|===|-|\n   |---|   | |\n  /     \  | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    1: "  +---+\n  O   |\n      |\n      |\n      |\n      |\n=========",
+    1: "           ___\n           | |\n           | |\n      o|===|-|\n   |---|   | |\n  /     \  | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    2: "  +---+\n  O   |\n /    |\n      |\n      |\n      |\n=========",
+    2: "           ___\n           | |\n           | |\n        ===|-|\n    ---|   | |\n  /     \  | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    3: "  +---+\n  O   |\n /|   |\n      |\n      |\n      |\n=========",
+    3: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /     \  | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    4: "  +---+\n  O   |\n /|\  |\n      |\n      |\n      |\n=========",
+    4: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    5: "  +---+\n  O   |\n /|\  |\n|     |\n      |\n      |\n=========",
+    5: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U       |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    6: "  +---+\n  O   |\n /|\  |\n| |   |\n      |\n      |\n=========",
+    6: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U       |-|\n |       |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    7: "  +---+\n  O   |\n /|\  |\n| | | |\n      |\n      |\n=========",
+    7: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U       |-|\n |       |=| |\n         | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    8: "  +---+\n  O   |\n /|\  |\n| | | |\n /    |\n      |\n=========",
+    8: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U       |-|\n |       |=| |\n         | | |\n |___  __  |_|\n  |@| |@|  | |\n___________|_|_",
 
-    9: "  +---+\n  O   |\n /|\  |\n| | | |\n /    |\n      |\n========="
+    9: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U       |-|\n |       |=| |\n         | | |\n |___  __  |_|\n  |@|      | |\n___________|_|_",
 
+    10: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U       |-|\n |       |=| |\n         | | |\n |_    __  |_|\n           | |\n___________|_|_",
 }
 
 regular_pics = {
-    0: "  +---+\n      |\n      |\n      |\n      |\n      |\n=========\n",
+    0: "           ___\n     |     | |\n    / \    | |\n   |--o|===|-|\n   |---|   | |\n  /     \  | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    1: "  +---+\n  |   |\n      |\n      |\n      |\n      |\n=========\n",
+    1: "           ___\n           | |\n           | |\n      o|===|-|\n   |---|   | |\n  /     \  | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    2: "  +---+\n  |   |\n  O   |\n      |\n      |\n      |\n=========\n",
+    2: "           ___\n           | |\n           | |\n        ===|-|\n    ---|   | |\n  /     \  | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    3: "  +---+\n  |   |\n  O   |\n  |   |\n      |\n      |\n=========\n",
+    3: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    4: "  +---+\n  |   |\n  O   |\n /|   |\n      |\n      |\n=========\n",
+    4: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U       |-|\n |       |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    5: "  +---+\n  |   |\n  O   |\n /|\  |\n      |\n      |\n=========\n",
+    5: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U       |-|\n |       |=| |\n         | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    6: "  +---+\n  |   |\n  O   |\n /|\  |\n /    |\n      |\n=========\n",
+    6: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U       |-|\n |       |=| |\n         | | |\n |___  __  |_|\n  |@| |@|  | |\n___________|_|_",
 
-    7: "  +---+\n  |   |\n  O   |\n /|\  |\n / \  |\n      |\n=========\n",
+    7: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U       |-|\n |       |=| |\n         | | |\n |___  __  |_|\n  |@|      | |\n___________|_|_",
 
-    8: "  +---+\n  |   |\n  O   |\n /|\  |\n / \  |\n      |\n=========\n"
+    8: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U       |-|\n |       |=| |\n         | | |\n |_    __  |_|\n           | |\n___________|_|_",
 }
 
 hard_pics = {
-    0: "  +---+\n      |\n      |\n      |\n      |\n      |\n=========\n",
+    0: "           ___\n     |     | |\n    / \    | |\n   |--o|===|-|\n   |---|   | |\n  /     \  | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    1: "  +---+\n  |   |\n      |\n      |\n      |\n      |\n=========\n",
+    1: "           ___\n           | |\n           | |\n      o|===|-|\n   |---|   | |\n  /     \  | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    2: "  +---+\n  |   |\n  O   |\n      |\n      |\n      |\n=========\n",
+    2: "           ___\n           | |\n           | |\n        ===|-|\n    ---|   | |\n  /     \  | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    3: "  +---+\n  |   |\n  O   |\n  |   |\n      |\n      |\n=========\n",
+    3: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    4: "  +---+\n  |   |\n  O   |\n /|\  |\n      |\n      |\n=========\n",
+    4: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U       |-|\n |       |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    5: "  +---+\n  |   |\n  O   |\n /|\  |\n / \  |\n      |\n=========\n",
+    5: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U       |-|\n |       |=| |\n         | | |\n |___  __  |_|\n  |@|      | |\n___________|_|_",
 
-    6: "  +---+\n  |   |\n  O   |\n /|\  |\n / \  |\n      |\n=========\n"
+    6: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U       |-|\n |       |=| |\n         | | |\n |_    __  |_|\n           | |\n___________|_|_",
 }
 
 xtra_hard_pics = {
-    0: "  +---+\n      |\n      |\n      |\n      |\n      |\n=========\n",
+    0: "           ___\n     |     | |\n    / \    | |\n   |--o|===|-|\n   |---|   | |\n  /     \  | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    1: "  +---+\n  |   |\n  O   |\n      |\n      |\n      |\n=========\n",
+    1: "           ___\n           | |\n           | |\n        ===|-|\n    ---|   | |\n  /     \  | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    2: "  +---+\n  |   |\n  O   |\n  |   |\n      |\n      |\n=========\n",
+    2: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    3: "  +---+\n  |   |\n  O   |\n /|\  |\n      |\n      |\n=========\n",
+    3: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U       |-|\n |       |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    4: "  +---+\n  |   |\n  O   |\n /|\  |\n / \  |\n      |\n=========\n",
+    4: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U       |-|\n |       |=| |\n         | | |\n |___  __  |_|\n  |@|      | |\n___________|_|_",
 
-    5: "  +---+\n  |   |\n  O   |\n /|\  |\n / \  |\n      |\n=========\n"
+    5: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U       |-|\n |       |=| |\n         | | |\n |_    __  |_|\n           | |\n___________|_|_",
 }
 
 impossible_pics = {
-    0: "  +---+\n      |\n      |\n      |\n      |\n      |\n=========\n",
+    0: "           ___\n     |     | |\n    / \    | |\n   |--o|===|-|\n   |---|   | |\n  /     \  | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    1: "  +---+\n  |   |\n  O   |\n      |\n      |\n      |\n=========\n",
+    1: "           ___\n           | |\n           | |\n        ===|-|\n    ---|   | |\n  /     \  | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
 
-    2: "  +---+\n  |   |\n  O   |\n /|\  |\n      |\n      |\n=========\n",
+    2: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U       |-|\n |       |=| |\n         | | |\n |__   __  |_|\n  |@|      | |\n___________|_|_",
 
-    3: "  +---+\n  |   |\n  O   |\n /|\  |\n / \  |\n      |\n=========\n"
+    3: "           ___\n           | |\n           | |\n        ===|-|\n           | |\n  /        | |\n | U       |-|\n |       |=| |\n         | | |\n |_    __  |_|\n           | |\n___________|_|_",
 }
 
 difficulty_lives = {
@@ -165,18 +168,18 @@ difficulty_lives = {
 }
 
 texture1 = {
-    0: '_|_     _|_     _|_     _|_     _|_     _|_     _|_',
-    1: ' |       |       |       |       |       |       | ',
-    2: '    _|_     _|_     _|_     _|_     _|_     _|_    ',
-    3: '     |       |       |       |       |       |     ',
-    4: '_|_     _|_     _|_     _|_     _|_     _|_     _|_',
-    5: ' |       |       |       |       |       |       | ',
-    6: '    _|_     _|_     _|_     _|_     _|_     _|_    ',
-    7: '     |       |       |       |       |       |     ',
-    8: '_|_     _|_     _|_     _|_     _|_     _|_     _|_',
-    9: ' |       |       |       |       |       |       | ',
-    10: '    _|_     _|_     _|_     _|_     _|_     _|_    ',
-    11: '     |       |       |       |       |       |     '
+    0: '_|_     _|_     _|_     _|_     _|_     _|_     _|_     _|_     _|_    ',
+    1: ' |       |       |       |       |       |       |       |       |     ',
+    2: '    _|_     _|_     _|_     _|_     _|_     _|_     _|_     _|_     _|_',
+    3: '     |       |       |       |       |       |       |       |       | ',
+    # 4: '_|_     _|_     _|_     _|_     _|_     _|_     _|_',
+    # 5: ' |       |       |       |       |       |       | ',
+    # 6: '    _|_     _|_     _|_     _|_     _|_     _|_    ',
+    # 7: '     |       |       |       |       |       |     ',
+    # 8: '_|_     _|_     _|_     _|_     _|_     _|_     _|_',
+    # 9: ' |       |       |       |       |       |       | ',
+    # 10: '    _|_     _|_     _|_     _|_     _|_     _|_    ',
+    # 11: '     |       |       |       |       |       |     '
 }
 
 texture2 = {
@@ -192,6 +195,23 @@ texture2 = {
     9: '___|___|___|___|___|___|___|___|___|___|___|___|__',
     10: '_|___|___|___|___|___|___|___|___|___|___|___|___|',
     11: '___|___|___|___|___|___|___|___|___|___|___|___|__'
+}
+
+texture3 = {
+    0: '         *                 *                  *              *        ',
+    1: '                *                                     *          *    ',
+    2: '                        *            *                             ___',
+    3: '  *               *                                          |     | |',
+    4: '        *              _________##                 *        / \    | |',
+    5: '                      @\_\_\_\_\##    *     |              |--o|===|-|',
+    6: '  *                  @@@_\_\_\_\##\       \|/|/            |---|   | |',
+    7: '                    @@ @@\_\_\_\_\_\    \|\ |//|/     *   /     \  | |',
+    8: '             *     @@@@@@@ _\_\_\_\_\     \|\|/|/        |  U    | |-|',
+    9: '                  @@@@@@@@@----------|    \ |//          |  S    |=| |',
+    10: '       __         @@ @@@ @@_|_|__|_|_|     \|/           |  A    | | |',
+    11: '  ____|_@|_       @@@@@@@@@__________|     \|/           |_______| |_|',
+    12: '=|__ _____ |=     @@@@ .@@@___|_|____|      |             |@| |@|  | |',
+    13: '____0_____0__\|/__@@@@__@@@__________|_\|/__|___\|/__\|/___________|_|_'
 }
 
 
@@ -232,8 +252,8 @@ def select_word(filename, word_length_setting):
     words_list = file.split()
     filtered_words = [
         word for word in words_list if min_length <= len(word) <= max_length]  # list comprehension, very cool!
-    random_word = random.choice(filtered_words)
-    return random_word
+    launch_code = random.choice(filtered_words)
+    return launch_code
 
 
 def load_game_number():
@@ -286,7 +306,7 @@ def save_high_score(high_score):
         file.write(str(high_score) + '\n')
 
 
-def print_hangman_progression(game_difficulty):
+def print_starman_progression(game_difficulty):
     if game_difficulty == 'Very Easy':
         for step in very_easy_pics:
             print(f'\nWrong Guess {Fore.CYAN}{step}{Fore.WHITE}:\n')
@@ -315,13 +335,26 @@ def print_hangman_progression(game_difficulty):
     elif game_difficulty == 'Xtra Hard':
         for step in xtra_hard_pics:
             print(f'\nWrong Guess {Fore.CYAN}{step}{Fore.WHITE}:\n')
-            print(f'{Fore.YELLOW}{xtra_easy_pics[step]}\n \n')
+            print(f'{Fore.YELLOW}{xtra_hard_pics[step]}\n \n')
             time.sleep(.5)
     elif game_difficulty == 'Impossible':
         for step in impossible_pics:
             print(f'\nWrong Guess {Fore.CYAN}{step}{Fore.WHITE}:\n')
             print(f'{Fore.YELLOW}{impossible_pics[step]}\n \n')
             time.sleep(.5)
+
+
+def test_fonts(text):
+    with open('pyfigletfonts.txt', 'r') as file:
+        fonts = file.read().splitlines()
+
+    for font_example in fonts:
+        print(f'Testing font {Fore.CYAN}{font_example}{Fore.WHITE}:\n')
+        test_font = pyfiglet.figlet_format(text=f'{text}', font=font_example)
+        print()
+        print(test_font)
+        print(f'\n')
+        time.sleep(.008)
 
 
 def count_words_by_length(filename):
@@ -361,6 +394,7 @@ def display_letters(word, guessed_letters, game_difficulty, wrong_guesses):
     elif game_difficulty == 'Impossible':
         print(f'{Fore.YELLOW}{impossible_pics[wrong_guesses]}')
     print()
+    print(f'\n \n{Fore.CYAN}Launch Code{Fore.WHITE}: ')
     chosen_word = ''
     for letter in word:
         if letter.upper() in guessed_letters:
@@ -372,20 +406,23 @@ def display_letters(word, guessed_letters, game_difficulty, wrong_guesses):
     return chosen_word
 
 
-def user_guess(counter, guessed_letters, random_word, display, game_difficulty):
+def user_guess(counter, guessed_letters, launch_code, display, game_difficulty):
     while counter > 0:
         if counter == difficulty_lives[game_difficulty.lower()] and len(guessed_letters) == 0:
             print(
                 f'You have {Fore.GREEN}{counter}{Fore.WHITE} guesses remaining!!')
-        if counter < difficulty_lives[game_difficulty.lower()] and counter > 1:
+        if counter < difficulty_lives[game_difficulty.lower()] and counter > 3:
             print(
                 f'You only have {Fore.GREEN}{counter}{Fore.WHITE} wrong attempts remaining!!')
         if counter == 1:
             print(
-                f'Last chance!! You have {Fore.RED}{counter}{Fore.WHITE} wrong attempts remaining!!')
+                f'Last chance!! You only have {Fore.RED}{counter}{Fore.WHITE} engine remaining!!')
         if counter == difficulty_lives[game_difficulty.lower()] and len(guessed_letters) > 0:
             print(
                 f'You still have {Fore.GREEN}{counter}{Fore.WHITE} wrong attempts remaining!!')
+        if counter > 1 and counter < 4 and len(guessed_letters) > 0:
+            print(
+                f'Watch out!! You only have {Fore.RED}{counter}{Fore.WHITE} wrong attempts remaining!!')
 
         formatted_multi_guesses = ', '.join(
             guessed_letters[:-1]) + ' & ' + guessed_letters[-1] if len(guessed_letters) > 1 else ''
@@ -408,7 +445,7 @@ def user_guess(counter, guessed_letters, random_word, display, game_difficulty):
             # print('//EXITING CURRENT GAME//')
             sleep('...')
             return None
-        if guess.lower() == random_word.lower():
+        if guess.lower() == launch_code.lower():
             sleep('...')
             return guess
         elif len(guess) > 1:
@@ -429,7 +466,7 @@ def user_guess(counter, guessed_letters, random_word, display, game_difficulty):
             print(f_pressed_text)
             print("\nYou have paid respects.\nPlease guess again.")
             sleep('...')
-        elif guess in random_word and guess not in guessed_letters:
+        elif guess in launch_code and guess not in guessed_letters:
             return guess
 
         else:
@@ -489,7 +526,7 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
         "Not the letter we're looking for.",
         "Try a different letter.",
         "You're so close!",
-        "The secret word isn't that one.",
+        "The launch code isn't that one.",
         "That's not the missing piece.",
         "It's not that letter.",
         "Keep searching, you'll find it!"
@@ -525,42 +562,44 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
         'Mini': (2, 4)
     }
 
-    print('\nHey there! Try to guess all the letters in the secret word before your guesses run out!\n \n')
+    print(
+        f'\nShucks! We forgot the {Fore.CYAN}launch code{Fore.WHITE} again!\nHelp mission control decode the data before your rocket completely falls apart!\n')
     score_time = format_time(high_score)
-    print(
-        f'Out of {Fore.GREEN}{game_number}{Fore.WHITE} games played, your high score is \n')
-
-    print(f'{Fore.GREEN}{score_time}\n')
-
-    print(f'Can you set a new record??\nYour current settings are: \n')
-
-    print(
-        f'Word Length: {Back.BLUE}{Fore.WHITE}{word_length_setting}{Back.BLACK}{Fore.YELLOW}')
-
-    print(f'Game Difficulty: {Back.RED}{game_difficulty}{Back.BLACK}\n')
-
-    print(
-        f'{Back.BLUE}{word_length_setting}{Back.BLACK}{Fore.WHITE} length will generate words with {Fore.GREEN}{length_ranges[word_length_setting][0]} {Fore.WHITE}to {Fore.GREEN}{length_ranges[word_length_setting][1]} {Fore.WHITE}letters.')
-    print(
-        f'{Back.RED}{game_difficulty}{Back.BLACK}{Fore.WHITE} difficulty allows {Fore.GREEN}{difficulty_lives[game_difficulty.lower()]} {Fore.WHITE}wrong guesses before {Fore.RED}GAME OVER.\n{Fore.WHITE}Return to the main menu to change settings.\n \n[EX]it to return to the {Fore.MAGENTA}Main Menu{Fore.WHITE} or reset the game.')
-
-    sleep()
 
     while play:
+        print(
+            f'Out of {Fore.GREEN}{game_number}{Fore.WHITE} games played, your fastest time is \n')
+
+        print(f'{Fore.GREEN}{score_time}\n')
+
+        print('Can you set a new record??\nYour current settings are: \n')
+
+        print(
+            f'Word Length: {Back.BLUE}{Fore.WHITE}{word_length_setting}{Back.BLACK}{Fore.YELLOW}')
+
+        print(f'Game Difficulty: {Back.RED}{game_difficulty}{Back.BLACK}\n')
+
+        print(
+            f'{Back.BLUE}{word_length_setting}{Back.BLACK}{Fore.WHITE} length will generate words with {Fore.GREEN}{length_ranges[word_length_setting][0]} {Fore.WHITE}to {Fore.GREEN}{length_ranges[word_length_setting][1]} {Fore.WHITE}letters.')
+        print(
+            f'{Back.RED}{game_difficulty}{Back.BLACK}{Fore.WHITE} difficulty allows {Fore.GREEN}{difficulty_lives[game_difficulty.lower()]} {Fore.WHITE}wrong guesses before {Fore.RED}MISSION FAILURE.\n{Fore.WHITE}Return to Mission Control to change settings.\n \n[EX]it to return to the {Fore.MAGENTA}Main Menu{Fore.WHITE} or reset the game.')
+
+        sleep()
+
         # game_number += 1
         # save_game_number(game_number)
-        random_word = select_word(filename, word_length_setting)
+        launch_code = select_word(filename, word_length_setting)
         guessed_letters = []
         counter = difficulty_lives[game_difficulty.lower()]
 
         start_time = time.time()  # record the start time
 
-        print(random_word)
+        print(launch_code)
         print()
 
         while counter > 0:
             display = display_letters(
-                random_word, guessed_letters, game_difficulty, wrong_guesses)
+                launch_code, guessed_letters, game_difficulty, wrong_guesses)
             print(f'\n{display}\n')
 
             if '_ ' not in display:
@@ -569,14 +608,14 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
                 end_time = time.time()  # Record the end time
                 duration = end_time - start_time
                 formatted_time = format_time(duration)
-                formatted_word = random_word[0].upper(
-                ) + random_word[1:].lower()
+                formatted_word = launch_code[0].upper(
+                ) + launch_code[1:].lower()
                 win_message = random.choice(win_statements)
                 win_text = pyfiglet.figlet_format(
-                    text="VICTORY", font="isometric1")
+                    text="LIFT OFF", font="isometric1")
                 print(f'\n{win_text}')
                 print(
-                    f"{win_message}\nYou guessed the secret word, {Fore.CYAN}'{formatted_word}'{Fore.WHITE}!")
+                    f"{win_message}\nYou guessed the launch code, {Fore.CYAN}'{formatted_word}'{Fore.WHITE}!\nYou successfully launched into outer space!")
                 print(
                     f'It only took you {Fore.GREEN}{formatted_time}{Fore.WHITE}!')
                 print('...')
@@ -609,8 +648,11 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
                 sleep('...')
                 break
 
+            eftiwall_font = pyfiglet.figlet_format(
+                text='9( ajy', font='eftiwall')
+            print(f'\n{eftiwall_font}')
             guess = user_guess(counter, guessed_letters,
-                               random_word, display, game_difficulty)
+                               launch_code, display, game_difficulty)
 
             if guess is None:
                 end_time = time.time()  # Record the end time
@@ -624,17 +666,17 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
                 play = False
                 break
 
-            if guess in random_word and guess.upper() not in guessed_letters:
+            if guess in launch_code and guess.upper() not in guessed_letters:
                 congrats_message = random.choice(congrats_statements)
                 print(
                     f'{congrats_message} You guessed "{guess.upper()}" {Fore.GREEN}correctly{Fore.WHITE}!')
                 sleep('...')
                 guessed_letters.append(guess.upper())
 
-            if guess not in random_word and guess not in guessed_letters:
+            if guess not in launch_code and guess not in guessed_letters:
                 dissapoint_message = random.choice(dissapoint_statements)
                 print(
-                    f"{dissapoint_message} '{guess.upper()}' is {Fore.RED}not{Fore.WHITE} in the secret word :(")
+                    f"{dissapoint_message} '{guess.upper()}' is {Fore.RED}not{Fore.WHITE} in the launch code :(")
                 sleep('...')
                 guessed_letters.append(guess.upper())
                 counter -= 1
@@ -646,15 +688,15 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
             formatted_time = format_time(duration)
             start_screen1()
             display = display_letters(
-                random_word, guessed_letters, game_difficulty, wrong_guesses)
-            formatted_word = random_word[0].upper(
-            ) + random_word[1:].lower()
+                launch_code, guessed_letters, game_difficulty, wrong_guesses)
+            formatted_word = launch_code[0].upper(
+            ) + launch_code[1:].lower()
             print(f'\n{display}\n')
             game_over_text = pyfiglet.figlet_format(
                 text='GAME OVER', font='isometric2')
             print(game_over_text)
             print(
-                f'\nThe correct word was: {Fore.CYAN}{formatted_word}{Fore.WHITE} :(')
+                f'\n{Fore.RED}MISSION FAILURE{Fore.WHITE}:\nThe launch code was: {Fore.CYAN}{formatted_word}{Fore.WHITE}\nYour rocket fell apart on the launch pad :(')
             print(f'You played for: {Fore.RED}{formatted_time}{Fore.WHITE}')
             sleep('...')
             # adding to score history dictionary
@@ -686,14 +728,33 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
                 print(resetting_game_text)
                 # print('//RESETTING GAME//')
                 sleep('...')
-                print('Guessed Letters = 0\nCounter = 8\n \nReady to go!!')
+                three_text = pyfiglet.figlet_format(
+                    text='Three', font='rowancap')
+                print(three_text)
                 sleep('...')
+                two_text = pyfiglet.figlet_format(
+                    text='TWO', font='nancyj-fancy')
+                print(two_text)
+                sleep('...')
+                one_text = pyfiglet.figlet_format(text='ONE!', font='roman')
+                print(one_text)
+                sleep('...')
+                ready_text = pyfiglet.figlet_format(
+                    text='Ready!', font='eca_____')
+                print(f'{ready_text}')
+                sleep('...')
+                print_texture(texture2)
+                print()
+                eftiwall_font = pyfiglet.figlet_format(
+                    text='9( ajy', font='eftiwall')
+                print(f'{eftiwall_font}')
+                # print('\n \nReady to go!!')
                 counter = difficulty_lives[game_difficulty.lower()]
                 guessed_letters = []
                 wrong_guesses = 0
                 break
             else:
-                print("Please enter either 'yes' or 'no'")
+                print(f"Please enter either 'yes' or 'no'")
                 sleep('...')
         if not play:
             return high_score
@@ -705,21 +766,25 @@ def main_menu():
     high_score = load_high_score()
     word_length_setting = load_word_length()
     game_difficulty = load_game_difficulty()
-    # print('\nWelcome to Hangman!\n')
+    # print('\nWelcome to starman!\n')
     welcome_to_text = pyfiglet.figlet_format(
-        text='Welcome to', font='rectangles', width=50)
+        text='Welcome to', font='rectangles')
     print(welcome_to_text)
-    game_name_text = pyfiglet.figlet_format(text="Hangman",
-                                            font="ogre",)
+    game_name_text = pyfiglet.figlet_format(text="Starman!",
+                                            font="trek",)
     print(f'{Fore.YELLOW}{game_name_text}')
     print()
-    print_texture(texture2)
+    print_texture(texture3)
     print()
+    print_texture(texture1)
+    print(f'\n')
     while True:
+        eftiwall_font = pyfiglet.figlet_format(text='9( ajy', font='eftiwall')
+        print(f'{eftiwall_font}')
         menu_text = pyfiglet.figlet_format(
-            text='MAIN  MENU', font='small')
+            text='Mission Control', font='small')
         print(
-            f"\n{menu_text}\n \nOptions:\n[P]lay the game\n[C]heck high score\n[V]iew score history\n[S]ettings\n[T]ools\n[E]xit the game\n")
+            f"{menu_text}\nOptions:\n[P]lay the game\n[C]heck high score\n[V]iew score history\n[S]ettings\n[T]ools\n[E]xit the game\n")
 
         choice = input('Choose an option: > ').lower().strip()
 
@@ -729,6 +794,7 @@ def main_menu():
                 text="STARTING GAME!", font='smslant')
             print(initializing_game_text)
             sleep('...')
+            print_texture(texture1)
             new_high_score = play_game(
                 filename, score_history, high_score, word_length_setting, game_difficulty)
             save_high_score(new_high_score)
@@ -1039,7 +1105,7 @@ def main_menu():
                     text='DEV TOOLS', font='Rectangles', width=50)
                 print(dev_tool_text)
                 print(
-                    '\n \nOptions:\n[L]engths of words listed\n[R]andom word generator\n[I]mage progression\n[E]xit\n \n')
+                    '\n \nOptions:\n[L]engths of words listed\n[R]andom word generator\n[I]mage progression\n[F]ont Tester\n[E]xit\n \n')
                 tool_choice = input(
                     'Choose an option: > ').lower().strip()
 
@@ -1058,9 +1124,9 @@ def main_menu():
                         text="RANDOM WORD GENERATOR", font='smslant')
                     print(random_word_generator)
                     # print('//RANDOM WORD GENERATOR//')
-                    random_word = select_word(filename, word_length_setting)
+                    launch_code = select_word(filename, word_length_setting)
                     random_word_text = pyfiglet.figlet_format(
-                        text=f'{random_word}', font="small")
+                        text=f'{launch_code}', font="small")
                     sleep('...')
                     print(
                         f'Your current word length is:\n \n{Fore.GREEN}{word_length_setting}{Fore.WHITE}\n \nRandom word generated:\n \n{Fore.CYAN}{random_word_text}{Fore.WHITE}')
@@ -1073,9 +1139,45 @@ def main_menu():
                     print(f'{img_prog_text}\n \n')
                     print(
                         f'The {Fore.CYAN}game difficulty{Fore.WHITE} is curently set to:\n \n{Fore.GREEN}{game_difficulty}{Fore.WHITE}\n \n{Fore.WHITE}{Back.BLUE}{game_difficulty}{Fore.WHITE}{Back.BLACK} difficulty allows for {Fore.GREEN}{difficulty_lives[game_difficulty.lower()]}{Fore.WHITE} wrong guesses.\nThe image progressions for this difficulty are as follows:\n \n')
-                    print_hangman_progression(game_difficulty)
+                    print_starman_progression(game_difficulty)
                     sleep('...')
                     break
+
+                elif tool_choice == 'f':
+                    sleep('...')
+                    font_testing_text = pyfiglet.figlet_format(
+                        text="Font Tester", font="charact1")
+                    print(f'{font_testing_text}\n \n')
+                    print(
+                        f'Test how a word of your choice looks in various {Fore.CYAN}ASCII{Fore.WHITE} fonts')
+                    print(f'{Fore.RED}*limit to 15 characters*{Fore.WHITE}\n \n')
+                    while True:
+                        text = input(
+                            f'Please enter a {Fore.CYAN}search{Fore.WHITE} term: > ').strip()
+
+                        if len(text) > 1 and len(text) < 16:
+                            sleep('...')
+                            test_fonts(text)
+                            sleep('...')
+                            break
+
+                        elif len(text) < 1:
+                            sleep('...')
+                            invalid_text = pyfiglet.figlet_format(
+                                text='IVALID', font='small')
+                            print(f'{Fore.RED}{invalid_text}')
+                            print(
+                                f'Please enter a {Fore.CYAN}search{Fore.WHITE} term.')
+                            sleep('...')
+
+                        else:
+                            sleep('...')
+                            invalid_text = pyfiglet.figlet_format(
+                                text='IVALID', font='small')
+                            print(f'{Fore.RED}{invalid_text}')
+                            print(
+                                f'Please enter a valid {Fore.CYAN}search{Fore.WHITE} term.')
+                            sleep('...')
 
                 elif tool_choice == 'e':
                     sleep('...')
