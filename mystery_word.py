@@ -6,7 +6,7 @@ import pyfiglet
 import colorama
 from colorama import Fore, Back, Style
 
-# Line 500ish print(random_word)
+# Line 502 print(random_word)
 
 colorama.init(autoreset=True)
 
@@ -39,7 +39,9 @@ very_easy_pics = {
 
     13: "  +---+\n  |   |\n  O   |\n  |   |\n /|\  |\n| | | |\n  |   |\n / \  |\n|   | |\n      |\n=========",
 
-    14: "  +---+\n  |   |\n  O   |\n  |   |\n /|\  |\n| | | |\n  |   |\n / \  |\n|   | |\n      |\n========="
+    14: "  +---+\n  |   |\n  O   |\n  |   |\n /|\  |\n| | | |\n  |   |\n / \  |\n|   | |\n      |\n=========",
+
+    15: "  +---+\n  |   |\n  O   |\n  |   |\n /|\  |\n| | | |\n  |   |\n / \  |\n|   | |\n      |\n========="
 }
 
 easy_pics = {
@@ -176,6 +178,21 @@ texture1 = {
     11: '     |       |       |       |       |       |     '
 }
 
+texture2 = {
+    0: '_|___|___|___|___|___|___|___|___|___|___|___|___|',
+    1: '___|___|___|___|___|___|___|___|___|___|___|___|__',
+    2: '_|___|___|___|___|___|___|___|___|___|___|___|___|',
+    3: '___|___|___|___|___|___|___|___|___|___|___|___|__',
+    4: '_|___|___|___|___|___|___|___|___|___|___|___|___|',
+    5: '___|___|___|___|___|___|___|___|___|___|___|___|__',
+    6: '_|___|___|___|___|___|___|___|___|___|___|___|___|',
+    7: '___|___|___|___|___|___|___|___|___|___|___|___|__',
+    8: '_|___|___|___|___|___|___|___|___|___|___|___|___|',
+    9: '___|___|___|___|___|___|___|___|___|___|___|___|__',
+    10: '_|___|___|___|___|___|___|___|___|___|___|___|___|',
+    11: '___|___|___|___|___|___|___|___|___|___|___|___|__'
+}
+
 
 def print_texture(texture):
     for line_number in texture:
@@ -266,6 +283,44 @@ def load_high_score():
 def save_high_score(high_score):
     with open('high_score.txt', 'w') as file:
         file.write(str(high_score) + '\n')
+
+
+def print_hangman_progression(game_difficulty):
+    if game_difficulty == 'Very Easy':
+        for step in very_easy_pics:
+            print(f'\nWrong Guess {Fore.CYAN}{step}{Fore.WHITE}:\n')
+            print(f'{Fore.YELLOW}{very_easy_pics[step]}\n \n')
+            time.sleep(.5)
+    elif game_difficulty == 'Easy':
+        for step in easy_pics:
+            print(f'\nWrong Guess {Fore.CYAN}{step}{Fore.WHITE}:\n')
+            print(f'{Fore.YELLOW}{easy_pics[step]}\n \n')
+            time.sleep(.5)
+    elif game_difficulty == 'Medium':
+        for step in medium_pics:
+            print(f'\nWrong Guess {Fore.CYAN}{step}{Fore.WHITE}:\n')
+            print(f'{Fore.YELLOW}{medium_pics[step]}\n \n')
+            time.sleep(.5)
+    elif game_difficulty == 'Regular':
+        for step in regular_pics:
+            print(f'\nWrong Guess {Fore.CYAN}{step}{Fore.WHITE}:\n')
+            print(f'{Fore.YELLOW}{regular_pics[step]}\n \n')
+            time.sleep(.5)
+    elif game_difficulty == 'Hard':
+        for step in hard_pics:
+            print(f'\nWrong Guess {Fore.CYAN}{step}{Fore.WHITE}:\n')
+            print(f'{Fore.YELLOW}{hard_pics[step]}\n \n')
+            time.sleep(.5)
+    elif game_difficulty == 'Xtra Hard':
+        for step in xtra_hard_pics:
+            print(f'\nWrong Guess {Fore.CYAN}{step}{Fore.WHITE}:\n')
+            print(f'{Fore.YELLOW}{xtra_easy_pics[step]}\n \n')
+            time.sleep(.5)
+    elif game_difficulty == 'Impossible':
+        for step in impossible_pics:
+            print(f'\nWrong Guess {Fore.CYAN}{step}{Fore.WHITE}:\n')
+            print(f'{Fore.YELLOW}{impossible_pics[step]}\n \n')
+            time.sleep(.5)
 
 
 def count_words_by_length(filename):
@@ -488,7 +543,7 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
     print(
         f'{Back.RED}{game_difficulty}{Back.BLACK}{Fore.WHITE} difficulty allows {Fore.GREEN}{difficulty_lives[game_difficulty.lower()]} {Fore.WHITE}wrong guesses before {Fore.RED}GAME OVER.\n{Fore.WHITE}Return to the main menu to change settings.\n \n[EX]it to return to the {Fore.MAGENTA}Main Menu{Fore.WHITE} or reset the game.')
 
-    sleep('...')
+    sleep()
 
     while play:
         game_number += 1
@@ -650,7 +705,7 @@ def main_menu():
                                             font="ogre",)
     print(f'{Fore.YELLOW}{game_name_text}')
     print()
-    print_texture(texture1)
+    print_texture(texture2)
     print()
     while True:
         menu_text = pyfiglet.figlet_format(
@@ -976,7 +1031,7 @@ def main_menu():
                     text='DEV TOOLS', font='Rectangles', width=50)
                 print(dev_tool_text)
                 print(
-                    '\n \nOptions:\n[L]engths of words listed\n[R]andom word generator\n[E]xit\n \n')
+                    '\n \nOptions:\n[L]engths of words listed\n[R]andom word generator\n[I]mage progression\n[E]xit\n \n')
                 tool_choice = input(
                     'Choose an option: > ').lower().strip()
 
@@ -1002,6 +1057,17 @@ def main_menu():
                     print(
                         f'Your current word length is:\n \n{Fore.GREEN}{word_length_setting}{Fore.WHITE}\n \nRandom word generated:\n \n{Fore.CYAN}{random_word_text}{Fore.WHITE}')
                     sleep('...')
+
+                elif tool_choice == 'i':
+                    sleep('...')
+                    img_prog_text = pyfiglet.figlet_format(
+                        text='Img Prog', font="drpepper")
+                    print(f'{img_prog_text}\n \n')
+                    print(
+                        f'The {Fore.CYAN}game difficulty{Fore.WHITE} is curently set to:\n \n{Fore.GREEN}{game_difficulty}{Fore.WHITE}\n \n{Fore.WHITE}{Back.BLUE}{game_difficulty}{Fore.WHITE}{Back.BLACK} difficulty allows for {Fore.GREEN}{difficulty_lives[game_difficulty.lower()]}{Fore.WHITE} wrong guesses.\nThe image progressions for this difficulty are as follows:\n \n')
+                    print_hangman_progression(game_difficulty)
+                    sleep('...')
+                    break
 
                 elif tool_choice == 'e':
                     sleep('...')
