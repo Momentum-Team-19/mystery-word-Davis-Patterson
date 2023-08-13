@@ -167,6 +167,15 @@ difficulty_lives = {
     'impossible': 3
 }
 
+length_ranges = {
+    'Xtreme': (20, 22),
+    'Greater': (17, 19),
+    'Longer': (13, 16),
+    'Regular': (9, 12),
+    'Small': (5, 8),
+    'Mini': (2, 4)
+}
+
 texture1 = {
     0: '_|_     _|_     _|_     _|_     _|_     _|_     _|_     _|_     _|_    ',
     1: ' |       |       |       |       |       |       |       |       |     ',
@@ -238,14 +247,6 @@ def format_time(seconds):
 
 
 def select_word(filename, word_length_setting):
-    length_ranges = {
-        'Xtreme': (20, 22),
-        'Greater': (17, 19),
-        'Longer': (13, 16),
-        'Regular': (9, 12),
-        'Small': (5, 8),
-        'Mini': (2, 4)
-    }
     min_length, max_length = length_ranges[word_length_setting]
     with open(filename, 'r') as file:
         file = file.read()
@@ -526,7 +527,7 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
         "Not the letter we're looking for.",
         "Try a different letter.",
         "You're so close!",
-        "The launch code isn't that one.",
+        "The launch code isn't that.",
         "That's not the missing piece.",
         "It's not that letter.",
         "Keep searching, you'll find it!"
@@ -568,21 +569,44 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
 
     while play:
         print(
-            f'Out of {Fore.GREEN}{game_number}{Fore.WHITE} games played, your fastest time is \n')
+            f'Out of {Fore.CYAN}{game_number}{Fore.WHITE} games played, your fastest time is:\n')
 
         print(f'{Fore.GREEN}{score_time}\n')
 
         print('Can you set a new record??\nYour current settings are: \n')
 
-        print(
-            f'Word Length: {Back.BLUE}{Fore.WHITE}{word_length_setting}{Back.BLACK}{Fore.YELLOW}')
+        if word_length_setting.lower() == 'mini':
+            print(
+                f'Word Length: {Back.BLUE}{word_length_setting}{Back.BLACK}')
+        if word_length_setting.lower() == 'small' or word_length_setting.lower() == 'regular':
+            print(
+                f'Word Length: {Back.GREEN}{word_length_setting}{Back.BLACK}')
+        if word_length_setting.lower() == 'longer':
+            print(
+                f'Word Length: {Back.YELLOW}{word_length_setting}{Back.BLACK}')
+        if word_length_setting.lower() == 'greater' or word_length_setting.lower() == 'xtreme':
+            print(
+                f'Word Length: {Back.RED}{word_length_setting}{Back.BLACK}')
 
-        print(f'Game Difficulty: {Back.RED}{game_difficulty}{Back.BLACK}\n')
+        # print(f'Word Length: {Back.BLUE}{Fore.WHITE}{word_length_setting}{Back.BLACK}{Fore.YELLOW}')
+
+        if game_difficulty.lower() == 'very easy' or game_difficulty.lower() == 'easy':
+            print(
+                f'Game Difficulty: {Back.GREEN}{game_difficulty}{Back.BLACK}\n')
+        if game_difficulty.lower() == 'medium' or game_difficulty.lower() == 'regular':
+            print(
+                f'Game Difficulty: {Back.BLUE}{game_difficulty}{Back.BLACK}\n')
+        if game_difficulty.lower() == 'hard':
+            print(
+                f'Game Difficulty: {Back.YELLOW}{game_difficulty}{Back.BLACK}\n')
+        if game_difficulty.lower() == 'xtra hard' or game_difficulty.lower() == 'impossible':
+            print(
+                f'Game Difficulty: {Back.RED}{game_difficulty}{Back.BLACK}\n')
+
+        # print(f'Game Difficulty: {Back.RED}{game_difficulty}{Back.BLACK}\n')
 
         print(
-            f'{Back.BLUE}{word_length_setting}{Back.BLACK}{Fore.WHITE} length will generate words with {Fore.GREEN}{length_ranges[word_length_setting][0]} {Fore.WHITE}to {Fore.GREEN}{length_ranges[word_length_setting][1]} {Fore.WHITE}letters.')
-        print(
-            f'{Back.RED}{game_difficulty}{Back.BLACK}{Fore.WHITE} difficulty allows {Fore.GREEN}{difficulty_lives[game_difficulty.lower()]} {Fore.WHITE}wrong guesses before {Fore.RED}MISSION FAILURE.\n{Fore.WHITE}Return to Mission Control to change settings.\n \n[EX]it to return to the {Fore.MAGENTA}Main Menu{Fore.WHITE} or reset the game.')
+            f'These settings will generate words with {Fore.CYAN}{length_ranges[word_length_setting][0]}{Fore.WHITE} to {Fore.CYAN}{length_ranges[word_length_setting][1]}{Fore.WHITE} letters.\nYou are given {Fore.GREEN}{difficulty_lives[game_difficulty.lower()]}{Fore.WHITE} wrong guesses before {Fore.RED}MISSION FAILURE.{Fore.WHITE}\n[EX]it to return to {Fore.MAGENTA}Mission Control{Fore.WHITE} or reset the game.')
 
         sleep()
 
@@ -711,7 +735,10 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
                 'Do you want to play again? (y/n) > ').lower().strip()
             sleep('...')
             if play_again.lower() == 'n':
-                print('Thanks for playing!')
+                thanks_text = pyfiglet.figlet_format(
+                    text="Thanks For Playing", font="speed")
+                print(thanks_text)
+                # print('Thanks for playing!')
                 play = False
                 break
             if play_again.upper() == 'F':
@@ -754,7 +781,10 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
                 wrong_guesses = 0
                 break
             else:
-                print(f"Please enter either 'yes' or 'no'")
+                invalid_text = pyfiglet.figlet_format(
+                    text='IVALID', font='small')
+                print(f'{Fore.RED}{invalid_text}')
+                print("Please enter either 'yes' or 'no'")
                 sleep('...')
         if not play:
             return high_score
@@ -771,14 +801,14 @@ def main_menu():
         text='Welcome to', font='rectangles')
     print(welcome_to_text)
     game_name_text = pyfiglet.figlet_format(text="Starman!",
-                                            font="trek",)
+                                            font="slant",)
     print(f'{Fore.YELLOW}{game_name_text}')
     print()
     print_texture(texture3)
     print('\n')
-    print_texture(texture1)
-    print('\n')
     while True:
+        print_texture(texture1)
+        print('\n')
         eftiwall_font = pyfiglet.figlet_format(text='9( ajy', font='eftiwall')
         print(f'{eftiwall_font}')
         menu_text = pyfiglet.figlet_format(
@@ -842,7 +872,26 @@ def main_menu():
                     # print('//WORD LENGTH SETTINGS//')
                     sleep('...')
                     print(
-                        f'Word Lengths:\n[X]treme  | (20-22 letters)\n[G]reater | (17-19 letters)\n[L]onger  | (13-16 letters)\n[R]egular | (9-12 letters)\n[S]mall   | (5-8 letters)\n[M]ini    | (2-4 letters)\n \n \nThe word length is currently set to: \n \n{Fore.WHITE}{Back.BLUE}{word_length_setting}{Fore.WHITE}{Back.BLACK}\n')
+                        f'Word Lengths:\n[X]treme  | (20-22 letters)\n[G]reater | (17-19 letters)\n[L]onger  | (13-16 letters)\n[R]egular | (9-12 letters)\n[S]mall   | (5-8 letters)\n[M]ini    | (2-4 letters)\n \n \nThe word length is currently set to: \n \n')
+
+                    if word_length_setting.lower() == 'mini':
+                        print(
+                            f'{Back.BLUE}{Fore.WHITE}{word_length_setting}{Fore.WHITE}{Back.BLACK} ({Fore.CYAN}{length_ranges[word_length_setting][0]}{Fore.WHITE}-{Fore.CYAN}{length_ranges[word_length_setting][1]}{Fore.WHITE} letters)\n')
+
+                    if word_length_setting.lower() == 'small' or word_length_setting.lower() == 'regular':
+                        print(
+                            f'{Back.GREEN}{Fore.BLACK}{word_length_setting}{Fore.WHITE}{Back.BLACK} ({Fore.CYAN}{length_ranges[word_length_setting][0]}{Fore.WHITE}-{Fore.CYAN}{length_ranges[word_length_setting][1]}{Fore.WHITE} letters)\n')
+
+                    if word_length_setting.lower() == 'longer':
+                        print(
+                            f'{Back.YELLOW}{Fore.WHITE}{word_length_setting}{Fore.WHITE}{Back.BLACK} ({Fore.CYAN}{length_ranges[word_length_setting][0]}{Fore.WHITE}-{Fore.CYAN}{length_ranges[word_length_setting][1]}{Fore.WHITE} letters)\n')
+
+                    if word_length_setting.lower() == 'greater' or word_length_setting.lower() == 'xtreme':
+                        print(
+                            f'{Back.RED}{Fore.WHITE}{word_length_setting}{Fore.WHITE}{Back.BLACK} ({Fore.CYAN}{length_ranges[word_length_setting][0]}{Fore.WHITE}-{Fore.CYAN}{length_ranges[word_length_setting][1]}{Fore.WHITE} letters)\n')
+
+                    # {Fore.WHITE}{Back.BLUE}{word_length_setting}{Fore.WHITE}{Back.BLACK}
+
                     while choice_flag:
                         maybe_change = input(
                             'Would you like to change the word length? (y/n) > ').lower().strip()
@@ -858,7 +907,7 @@ def main_menu():
                                     save_word_length(word_length_setting)
                                     choice_flag = False
                                     print(
-                                        f'The Word Length Setting has been set to: \n \n{Fore.GREEN}{word_length_setting}')
+                                        f'The Word Length Setting has been set to: \n \n{Fore.RED}{word_length_setting}')
                                     sleep('...')
                                     game_setting_flag = False
                                     break
@@ -869,7 +918,7 @@ def main_menu():
                                     save_word_length(word_length_setting)
                                     choice_flag = False
                                     print(
-                                        f'The Word Length Setting has been set to: \n \n{Fore.GREEN}{word_length_setting}')
+                                        f'The Word Length Setting has been set to: \n \n{Fore.RED}{word_length_setting}')
                                     sleep('...')
                                     game_setting_flag = False
                                     break
@@ -880,7 +929,7 @@ def main_menu():
                                     save_word_length(word_length_setting)
                                     choice_flag = False
                                     print(
-                                        f'The Word Length Setting has been set to: \n \n{Fore.GREEN}{word_length_setting}')
+                                        f'The Word Length Setting has been set to: \n \n{Fore.YELLOW}{word_length_setting}')
                                     sleep('...')
                                     game_setting_flag = False
                                     break
@@ -913,7 +962,7 @@ def main_menu():
                                     save_word_length(word_length_setting)
                                     choice_flag = False
                                     print(
-                                        f'The Word Length Setting has been set to: \n \n{Fore.GREEN}{word_length_setting}')
+                                        f'The Word Length Setting has been set to: \n \n{Fore.BLUE}{word_length_setting}')
                                     sleep('...')
                                     game_setting_flag = False
                                     break
@@ -942,7 +991,7 @@ def main_menu():
                                 text='IVALID', font='small')
                             print(f'{Fore.RED}{invalid_text}')
                             print(
-                                f'Please choose ({Fore.GREEN}y{Fore.WHITE}/{Fore.RED}n{Fore.WHITE})')
+                                f'Please choose (y/n)')
                             sleep('...')
                     break
 
@@ -955,7 +1004,23 @@ def main_menu():
                     # print('//DIFFICULTY SETTINGS//')
                     sleep('...')
                     print(
-                        f'Options:\n[V]ery Easy  | (15 Lives)\n[E]asy       | (12 Lives)\n[M]edium     | (10 Lives)\n[R]egular    | (8 Lives)\n[H]ard       | (6 Lives)\n[X]tra Hard  | (5 Lives)\n[I]mpossible | (3 Lives)\n \n \nThe difficutly is currently set to:\n \n{Fore.WHITE}{Back.RED}{game_difficulty}{Fore.WHITE}{Back.BLACK}\n')
+                        f'Options:\n[V]ery Easy  | (15 Lives)\n[E]asy       | (12 Lives)\n[M]edium     | (10 Lives)\n[R]egular    | (8 Lives)\n[H]ard       | (6 Lives)\n[X]tra Hard  | (5 Lives)\n[I]mpossible | (3 Lives)\n \n \nThe difficutly is currently set to:\n \n')
+
+                    if game_difficulty.lower() == 'very easy' or game_difficulty.lower() == 'easy':
+                        print(
+                            f'Game Difficulty: {Fore.WHITE}{Back.GREEN}{game_difficulty}{Fore.WHITE}{Back.BLACK}\n')
+                    if game_difficulty.lower() == 'medium' or game_difficulty.lower() == 'regular':
+                        print(
+                            f'Game Difficulty: {Fore.WHITE}{Back.BLUE}{game_difficulty}{Fore.WHITE}{Back.BLACK}\n')
+                    if game_difficulty.lower() == 'hard':
+                        print(
+                            f'Game Difficulty: {Fore.WHITE}{Back.YELLOW}{game_difficulty}{Fore.WHITE}{Back.BLACK}\n')
+                    if game_difficulty.lower() == 'xtra hard' or game_difficulty.lower() == 'impossible':
+                        print(
+                            f'Game Difficulty: {Fore.WHITE}{Back.RED}{game_difficulty}{Fore.WHITE}{Back.BLACK}\n')
+
+                    # print(f'{Fore.WHITE}{Back.RED}{game_difficulty}{Fore.WHITE}{Back.BLACK}\n')
+
                     while setting_choice_flag:
                         change_maybe = input(
                             'Would you like to change the game difficulty? (y/n) > ')
@@ -994,7 +1059,7 @@ def main_menu():
                                     save_game_difficulty(game_difficulty)
                                     setting_choice_flag = False
                                     print(
-                                        f'The game difficulty has been set to: \n \n{Fore.GREEN}{game_difficulty}')
+                                        f'The game difficulty has been set to: \n \n{Fore.BLUE}{game_difficulty}')
                                     sleep('...')
                                     game_setting_flag = False
                                     break
@@ -1005,7 +1070,7 @@ def main_menu():
                                     save_game_difficulty(game_difficulty)
                                     setting_choice_flag = False
                                     print(
-                                        f'The game difficulty has been set to: \n \n{Fore.GREEN}{game_difficulty}')
+                                        f'The game difficulty has been set to: \n \n{Fore.BLUE}{game_difficulty}')
                                     sleep('...')
                                     game_setting_flag = False
                                     break
@@ -1016,7 +1081,7 @@ def main_menu():
                                     save_game_difficulty(game_difficulty)
                                     setting_choice_flag = False
                                     print(
-                                        f'The game difficulty has been set to: \n \n{Fore.GREEN}{game_difficulty}')
+                                        f'The game difficulty has been set to: \n \n{Fore.YELLOW}{game_difficulty}')
                                     sleep('...')
                                     game_setting_flag = False
                                     break
@@ -1027,7 +1092,7 @@ def main_menu():
                                     save_game_difficulty(game_difficulty)
                                     setting_choice_flag = False
                                     print(
-                                        f'The game difficulty has been set to: \n \n{Fore.GREEN}{game_difficulty}')
+                                        f'The game difficulty has been set to: \n \n{Fore.RED}{game_difficulty}')
                                     sleep('...')
                                     game_setting_flag = False
                                     break
@@ -1038,7 +1103,7 @@ def main_menu():
                                     save_game_difficulty(game_difficulty)
                                     setting_choice_flag = False
                                     print(
-                                        f'The game difficulty has been set to: \n \n{Fore.GREEN}{game_difficulty}')
+                                        f'The game difficulty has been set to: \n \n{Fore.RED}{game_difficulty}')
                                     sleep('...')
                                     game_setting_flag = False
                                     break
@@ -1069,7 +1134,7 @@ def main_menu():
                                 text='IVALID', font='small')
                             print(f'{Fore.RED}{invalid_text}')
                             print(
-                                f'Please choose ({Fore.GREEN}y{Fore.WHITE}/{Fore.RED}n{Fore.WHITE})')
+                                f'Please choose (y/n)')
                             sleep('...')
                     break
 
@@ -1124,12 +1189,31 @@ def main_menu():
                         text="RANDOM WORD GENERATOR", font='smslant')
                     print(random_word_generator)
                     # print('//RANDOM WORD GENERATOR//')
-                    launch_code = select_word(filename, word_length_setting)
-                    random_word_text = pyfiglet.figlet_format(
-                        text=f'{launch_code}', font="small")
+                    random_word = select_word(filename, word_length_setting)
                     sleep('...')
-                    print(
-                        f'Your current word length is:\n \n{Fore.GREEN}{word_length_setting}{Fore.WHITE}\n \nRandom word generated:\n \n{Fore.CYAN}{random_word_text}{Fore.WHITE}')
+                    print(f'Your current word length is:\n \n')
+
+                    if word_length_setting.lower() == 'mini':
+                        print(
+                            f'Word Length:{Back.WHITE} {Fore.BLUE}{word_length_setting}{Fore.WHITE} {Back.BLACK}({Fore.CYAN}{length_ranges[word_length_setting][0]}{Fore.WHITE}-{Fore.CYAN}{length_ranges[word_length_setting][1]}{Fore.WHITE} letters)')
+                    if word_length_setting.lower() == 'small' or word_length_setting.lower() == 'regular':
+                        print(
+                            f'Word Length: {Fore.GREEN}{word_length_setting}{Fore.WHITE} ({Fore.CYAN}{length_ranges[word_length_setting][0]}{Fore.WHITE}-{Fore.CYAN}{length_ranges[word_length_setting][1]}{Fore.WHITE} letters)')
+                    if word_length_setting.lower() == 'longer':
+                        print(
+                            f'Word Length: {Fore.YELLOW}{word_length_setting}{Fore.WHITE} ({Fore.CYAN}{length_ranges[word_length_setting][0]}{Fore.WHITE}-{Fore.CYAN}{length_ranges[word_length_setting][1]}{Fore.WHITE} letters)')
+                    if word_length_setting.lower() == 'greater' or word_length_setting.lower() == 'xtreme':
+                        print(
+                            f'Word Length: {Fore.RED}{word_length_setting}{Fore.WHITE} ({Fore.CYAN}{length_ranges[word_length_setting][0]}{Fore.WHITE}-{Fore.CYAN}{length_ranges[word_length_setting][1]}{Fore.WHITE} letters)')
+
+                    # {Fore.GREEN}{word_length_setting}{Fore.WHITE}\n \n
+
+                    print(f'Random word generated:\n')
+                    random_word_pyfiglet = pyfiglet.figlet_format(
+                        text=f'{random_word}', font='small')
+                    print(f'{Fore.CYAN}{random_word_pyfiglet}{Fore.WHITE}')
+                    print(f"'{random_word}'")
+                    # {Fore.CYAN}{random_word_text}{Fore.WHITE}
                     sleep('...')
 
                 elif tool_choice == 'i':
@@ -1138,8 +1222,21 @@ def main_menu():
                         text='Img Prog', font="drpepper")
                     print(f'{img_prog_text}\n \n')
                     print(
-                        f'The {Fore.CYAN}game difficulty{Fore.WHITE} is curently set to:\n \n{Fore.GREEN}{game_difficulty}{Fore.WHITE}\n \n{Fore.WHITE}{Back.BLUE}{game_difficulty}{Fore.WHITE}{Back.BLACK} difficulty allows for {Fore.GREEN}{difficulty_lives[game_difficulty.lower()]}{Fore.WHITE} wrong guesses.\nThe image progressions for this difficulty are as follows:\n \n')
+                        f'The {Fore.CYAN}game difficulty{Fore.WHITE} is curently set to:\n')
+
+                    if game_difficulty.lower() == 'very easy' or game_difficulty.lower() == 'easy':
+                        print(f'{Fore.GREEN}{game_difficulty}{Fore.WHITE}')
+                    if game_difficulty.lower() == 'medium' or game_difficulty.lower() == 'regular':
+                        print(f'{Fore.BLUE}{game_difficulty}{Fore.WHITE}')
+                    if game_difficulty.lower() == 'hard':
+                        print(f'{Fore.YELLOW}{game_difficulty}{Fore.WHITE}')
+                    if game_difficulty.lower() == 'xtra hard' or game_difficulty.lower() == 'impossible':
+                        print(f'{Fore.RED}{game_difficulty}{Fore.WHITE}')
+
+                    print(
+                        f'\nThis setting allows for {Fore.GREEN}{difficulty_lives[game_difficulty.lower()]}{Fore.WHITE} wrong guesses.\nThe image progressions for this difficulty are as follows:\n \n')
                     print_starman_progression(game_difficulty)
+                    print(f'{Fore.RED}MISSION FAILURE{Fore.WHITE}')
                     sleep('...')
                     break
 
@@ -1150,12 +1247,12 @@ def main_menu():
                     print(f'{font_testing_text}\n \n')
                     print(
                         f'Test how a word of your choice looks in various {Fore.CYAN}ASCII{Fore.WHITE} fonts')
-                    print(f'{Fore.RED}*limit to 15 characters*{Fore.WHITE}\n \n')
+                    print(f'{Fore.RED}*limit to 20 characters*{Fore.WHITE}\n \n')
                     while True:
                         text = input(
                             f'Please enter a {Fore.CYAN}search{Fore.WHITE} term: > ').strip()
 
-                        if len(text) > 1 and len(text) < 16:
+                        if len(text) > 1 and len(text) < 21:
                             sleep('...')
                             test_fonts(text)
                             sleep('...')
