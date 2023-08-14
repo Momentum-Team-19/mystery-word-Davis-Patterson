@@ -19,7 +19,7 @@ pygame.mixer.init()
 current_directory = os.path.dirname(__file__)
 menu_music_path = os.path.join(
     current_directory, 'sfx', '8bittownthemesong-59266.mp3')
-game_music_path = os.path.join(current_directory, 'sfx', 'martian-131602.mp3')
+game_music_path = os.path.join(current_directory, 'sfx', 'martian-131602.m4a')
 victory_music_path = os.path.join(
     current_directory, 'sfx', 'very-lush-and-swag-loop-74140.mp3')
 gameover_music_path = os.path.join(
