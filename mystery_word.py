@@ -280,6 +280,33 @@ takeoff_img = {
 }
 
 
+def set_music_volume():
+    while True:
+        volume_input = input("Enter volume value (0.0 - 1.0): ")
+
+        try:
+            volume = float(volume_input)
+            if 0.0 <= volume <= 1.0:
+                pygame.mixer.music.set_volume(volume)
+                sleep('...')
+                print(f"Volume set to {Fore.GREEN}{volume}{Fore.WHITE}")
+                return
+            else:
+                sleep('...')
+                invalid_text = pyfiglet.figlet_format(
+                    text='IVALID', font='small')
+                print(f'{Fore.GREEN}{invalid_text}')
+                print("Please enter a value between 0.0 and 1.0.")
+                sleep('...')
+        except ValueError:
+            sleep('...')
+            invalid_text = pyfiglet.figlet_format(
+                text='IVALID', font='small')
+            print(f'{Fore.GREEN}{invalid_text}')
+            print(f"{Fore.RED}'VALUE ERROR'{Fore.WHITE}")
+            sleep('...')
+
+
 def print_texture(texture):
     for line_number in texture:
         print(texture[line_number])
@@ -495,6 +522,7 @@ def user_guess(counter, guessed_letters, launch_code, display, game_difficulty):
 
         guess = input('Guess a letter: > ').lower().strip()
         sleep('...')
+
         if guess.lower() == 'ex':
             exiting_game_text = pyfiglet.figlet_format(
                 text="EXITING GAME", font='smslant')
@@ -505,6 +533,10 @@ def user_guess(counter, guessed_letters, launch_code, display, game_difficulty):
         if guess.lower() == launch_code.lower():
             sleep('...')
             return guess
+        elif guess.lower() == 'vol':
+            sleep('...')
+            set_music_volume()
+            sleep('...')
         elif len(guess) > 1:
             print('Please enter only (1) letter at a time!')
             sleep('...')
@@ -896,6 +928,11 @@ def main_menu():
 
         choice = input('Choose an option: > ').lower().strip()
 
+        if choice.lower() == 'vol':
+            sleep('...')
+            set_music_volume()
+            sleep('...')
+
         if choice == 'p':
             sleep('...')
             initializing_game_text = pyfiglet.figlet_format(
@@ -972,7 +1009,7 @@ def main_menu():
 
                     if word_length_setting.lower() == 'longer':
                         print(
-                            f'{Back.YELLOW}{Fore.WHITE}{word_length_setting}{Fore.WHITE}{Back.BLACK} ({Fore.CYAN}{length_ranges[word_length_setting][0]}{Fore.WHITE}-{Fore.CYAN}{length_ranges[word_length_setting][1]}{Fore.WHITE} letters)\n')
+                            f'{Back.YELLOW}{Fore.BLACK}{word_length_setting}{Fore.WHITE}{Back.BLACK} ({Fore.CYAN}{length_ranges[word_length_setting][0]}{Fore.WHITE}-{Fore.CYAN}{length_ranges[word_length_setting][1]}{Fore.WHITE} letters)\n')
 
                     if word_length_setting.lower() == 'greater' or word_length_setting.lower() == 'xtreme':
                         print(
@@ -988,6 +1025,11 @@ def main_menu():
                             while True:
                                 len_change = input(
                                     'Select new word length: > ').lower().strip()
+
+                                if len_change.lower() == 'vol':
+                                    sleep('...')
+                                    set_music_volume()
+                                    sleep('...')
 
                                 if len_change == 'x':
                                     sleep('...')
@@ -1073,6 +1115,11 @@ def main_menu():
                             print("\nYou have paid respects.")
                             sleep('...')
 
+                        if maybe_change.lower() == 'vol':
+                            sleep('...')
+                            set_music_volume()
+                            sleep('...')
+
                         else:
                             sleep('...')
                             invalid_text = pyfiglet.figlet_format(
@@ -1118,6 +1165,11 @@ def main_menu():
                             while True:
                                 change_diff = input(
                                     'Select new game difficulty: > ').lower().strip()
+
+                                if choice.lower() == 'vol':
+                                    sleep('...')
+                                    set_music_volume()
+                                    sleep('...')
 
                                 if change_diff == 'v':
                                     sleep('...')
@@ -1215,6 +1267,11 @@ def main_menu():
                             setting_choice_flag = False
                             game_setting_flag = False
                             break
+
+                        if change_maybe.lower() == 'vol':
+                            sleep('...')
+                            set_music_volume()
+                            sleep('...')
 
                         else:
                             sleep('...')
@@ -1382,12 +1439,13 @@ def main_menu():
                     sleep('...')
 
         else:
-            sleep('...')
-            invalid_text = pyfiglet.figlet_format(
-                text='IVALID', font='small')
-            print(f'{Fore.RED}{invalid_text}')
-            print("Please choose one of the options listed.")
-            sleep('...')
+            # sleep('...')
+            # invalid_text = pyfiglet.figlet_format(
+            #     text='IVALID', font='small')
+            # print(f'{Fore.RED}{invalid_text}')
+            # print("Please choose one of the options listed.")
+            # sleep('...')
+            pass
 
 
 if __name__ == "__main__":
