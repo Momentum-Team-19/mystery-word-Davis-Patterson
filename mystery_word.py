@@ -655,7 +655,7 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
 
         start_time = time.time()  # record the start time
 
-        print(launch_code)
+        # print(launch_code)
         print()
 
         while counter > 0:
@@ -674,7 +674,10 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
                 win_message = random.choice(win_statements)
                 win_text = pyfiglet.figlet_format(
                     text="LIFT OFF", font="isometric1")
+                print_texture(takeoff_img)
+                time.sleep(.5)
                 print(f'\n{win_text}')
+                time.sleep(1)
                 print(
                     f"{win_message}\nYou guessed the launch code, {Fore.CYAN}'{formatted_word}'{Fore.WHITE}!\nYou successfully launched into outer space!")
                 print(
@@ -702,7 +705,7 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
                 # adding to score history dictionary
                 game_number += 1
                 save_game_number(game_number)
-                score_history[f'Game {game_number}'] = f'WIN - {formatted_time}'
+                score_history[f'Game {game_number}'] = f'WIN - Length: {word_length_setting}, Difficulty: {game_difficulty}, {launch_code}, {formatted_time}'
                 with open('score_history.txt', 'w') as file:
                     json.dump(score_history, file)
 
@@ -721,7 +724,7 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
                 formatted_time = format_time(duration)
                 game_number += 1
                 save_game_number(game_number)
-                score_history[f'Game {game_number}'] = f'EXIT - {formatted_time}'
+                score_history[f'Game {game_number}'] = f'EXIT - Length: {word_length_setting}, Difficulty: {game_difficulty}, {launch_code}, {formatted_time}'
                 with open('score_history.txt', 'w') as file:
                     json.dump(score_history, file)
                 play = False
@@ -763,7 +766,7 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
             # adding to score history dictionary
             game_number += 1
             save_game_number(game_number)
-            score_history[f'Game {game_number}'] = f'LOSS - {formatted_time}'
+            score_history[f'Game {game_number}'] = f'LOSS - Length: {word_length_setting}, Difficulty: {game_difficulty}, {launch_code}, {formatted_time}'
             with open('score_history.txt', 'w') as file:
                 json.dump(score_history, file)
 
@@ -807,7 +810,7 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
                     text='Ready!', font='eca_____')
                 print(f'{ready_text}')
                 sleep('...')
-                print_texture(texture2)
+                print_texture(texture1)
                 print()
                 eftiwall_font = pyfiglet.figlet_format(
                     text='9( ajy', font='eftiwall')
@@ -837,11 +840,14 @@ def main_menu():
     welcome_to_text = pyfiglet.figlet_format(
         text='Welcome to', font='rectangles')
     print(welcome_to_text)
+    time.sleep(.5)
     game_name_text = pyfiglet.figlet_format(text="Starman!",
                                             font="slant",)
     print(f'{Fore.YELLOW}{game_name_text}')
+    time.sleep(.5)
     print()
     print_texture(texture3)
+    time.sleep(1)
     print('\n')
     while True:
         print_texture(texture1)
@@ -1158,7 +1164,7 @@ def main_menu():
                                     sleep('...')
                                     invalid_text = pyfiglet.figlet_format(
                                         text='IVALID', font='small')
-                                    print(f'{Fore.RED}{invalid_text}')
+                                    print(f'{Fore.BLUE}{invalid_text}')
                                     print(
                                         "Please choose one of the options listed.")
                                     sleep('...')
@@ -1335,7 +1341,7 @@ def main_menu():
                     sleep('...')
                     invalid_text = pyfiglet.figlet_format(
                         text='IVALID', font='small')
-                    print(f'{Fore.RED}{invalid_text}')
+                    print(f'{Fore.GREEN}{invalid_text}')
                     print("Please choose one of the options listed.")
                     sleep('...')
 
