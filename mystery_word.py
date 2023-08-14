@@ -19,11 +19,13 @@ pygame.mixer.init()
 current_directory = os.path.dirname(__file__)
 menu_music_path = os.path.join(
     current_directory, 'sfx', '8bittownthemesong-59266.mp3')
-game_music_path = os.path.join(current_directory, 'sfx', 'martian-131602.m4a')
+game_music_path = os.path.join(current_directory, 'sfx', 'martian-131602.mp3')
 victory_music_path = os.path.join(
     current_directory, 'sfx', 'very-lush-and-swag-loop-74140.mp3')
 gameover_music_path = os.path.join(
     current_directory, 'sfx', 'game-over-38511.mp3')
+countdown_music_path = os.path.join(
+    current_directory, 'sfx', 'countdown-sound-effect-8-bit-151797.mp3')
 
 # pygame.mixer.music.load(menu_music_path)
 # menu_music = pygame.mixer.Sound(menu_music_path)
@@ -816,6 +818,9 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
                 sleep('...')
             elif play_again.lower() == 'y':
                 play = True
+                pygame.mixer.music.stop()
+                pygame.mixer.music.load(countdown_music_path)
+                pygame.mixer.music.play(-1)
                 resetting_game_text = pyfiglet.figlet_format(
                     text="RESETTING GAME", font='smslant')
                 print(resetting_game_text)
