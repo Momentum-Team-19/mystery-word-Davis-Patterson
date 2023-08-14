@@ -6,8 +6,9 @@ from anipage1 import start_screen1
 import pyfiglet
 import colorama
 from colorama import Fore, Back, Style
+import curses
 
-# Line 557 print(launch_code)
+# Line 650 print(launch_code)
 
 colorama.init(autoreset=True)
 
@@ -221,6 +222,42 @@ texture3 = {
     11: '  ____|_@|_       @@@@@@@@@__________|     \|/           |_______| |_|',
     12: '=|__ _____ |=     @@@@ .@@@___|_|____|      |             |@| |@|  | |',
     13: '____0_____0__\|/__@@@@__@@@__________|_\|/__|___\|/__\|/___________|_|_'
+}
+
+takeoff_img = {
+    0: '                                                   ,: ',
+    1: '                                                 ," | ',
+    2: "                                                /   : ",
+    3: "                                             --'   /  ",
+    4: '                                             \/ />/   ',
+    5: '                                             / <//_\  ',
+    6: '                                          __/   /     ',
+    7: "                                          )'-. /      ",
+    8: '                                          ./  :\      ',
+    9: '                                           /.' '      ',
+    10: "                                         '/'         ",
+    11: '                                         +           ',
+    12: '                                        "            ',
+    13: '                                      `.             ',
+    14: '                                  .-"-               ',
+    15: '                                 (    |              ',
+    16: '                             . .-'  '.               ',
+    17: '                             ( (.   )8:              ',
+    18: "                         .'    / (_  )               ",
+    19: '                          _. :(.   )8P  `            ',
+    20: "                      .  (  `-' (  `.   .            ",
+    21: '                       .  :  (   .a8a)               ',
+    22: '                      /_`( "a `a. )"`                ',
+    23: "                  (  (/  .  ' )=='                   ",
+    24: '                 (   (    )  .8"   +                 ',
+    25: "                   (`'8a.( _(   (                    ",
+    26: '                ..-. `8P    ) `  )  +                ',
+    27: "              -'   (      -ab:  )                    ",
+    28: '             "   _  "    (8P"Ya                      ',
+    29: '          _(    (    )b  -`.  ) +                    ',
+    30: '         ( 8)  ( _.aP" _a   \( \   *                 ',
+    31: '       +  )/    (8P   (88    )  )                    ',
+    32: '          (a:f   "     `"       `                    '
 }
 
 
@@ -808,13 +845,13 @@ def main_menu():
     print('\n')
     while True:
         print_texture(texture1)
-        print('\n')
+        print()
         eftiwall_font = pyfiglet.figlet_format(text='9( ajy', font='eftiwall')
         print(f'{eftiwall_font}')
         menu_text = pyfiglet.figlet_format(
             text='Mission Control', font='small')
         print(
-            f"{menu_text}\nOptions:\n[P]lay the game\n[C]heck high score\n[V]iew score history\n[S]ettings\n[T]ools\n[E]xit the game\n")
+            f"{menu_text}\nOptions:\n[P]lay the game\n[L]ift off\n[C]heck high score\n[V]iew score history\n[S]ettings\n[T]ools\n[E]xit the game\n")
 
         choice = input('Choose an option: > ').lower().strip()
 
@@ -828,6 +865,15 @@ def main_menu():
             new_high_score = play_game(
                 filename, score_history, high_score, word_length_setting, game_difficulty)
             save_high_score(new_high_score)
+            sleep('...')
+
+        if choice == 'l':
+            sleep('...')
+            lift_off_text = pyfiglet.figlet_format(
+                text='Lift Off!', font='isometric1')
+            print(lift_off_text)
+            sleep('...')
+            print_texture(takeoff_img)
             sleep('...')
 
         elif choice == 'c':
