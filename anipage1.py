@@ -5,7 +5,7 @@ import time
 
 def demo(screen):
     animation_start_time = time.time()
-    animation_duration = 1.5
+    animation_duration = 2
 
     while time.time() - animation_start_time < animation_duration:
         screen.print_at('GAME OVER',

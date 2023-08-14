@@ -6,11 +6,28 @@ from anipage1 import start_screen1
 import pyfiglet
 import colorama
 from colorama import Fore, Back, Style
-import curses
+import pygame
+import os
+from pygame import mixer
 
-# Line 650 print(launch_code)
+# Line 679 print(launch_code)
 
 colorama.init(autoreset=True)
+
+pygame.mixer.init()
+
+current_directory = os.path.dirname(__file__)
+menu_music_path = os.path.join(
+    current_directory, 'sfx', '8bittownthemesong-59266.mp3')
+game_music_path = os.path.join(current_directory, 'sfx', 'martian-131602.mp3')
+victory_music_path = os.path.join(
+    current_directory, 'sfx', 'very-lush-and-swag-loop-74140.mp3')
+gameover_music_path = os.path.join(
+    current_directory, 'sfx', 'game-over-38511.mp3')
+
+# pygame.mixer.music.load(menu_music_path)
+# menu_music = pygame.mixer.Sound(menu_music_path)
+# game_music = pygame.mixer.Sound(game_music_path)
 
 very_easy_pics = {
     0: "           ___\n     |     | |\n    / \    | |\n   |--o|===|-|\n   |---|   | |\n  /     \  | |\n | U     | |-|\n | S     |=| |\n | A     | | |\n |_______| |_|\n  |@| |@|  | |\n___________|_|_",
@@ -605,6 +622,9 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
     score_time = format_time(high_score)
 
     while play:
+        pygame.mixer.music.stop()
+        pygame.mixer.music.load(game_music_path)
+        pygame.mixer.music.play(-1)
         print(
             f'Out of {Fore.CYAN}{game_number}{Fore.WHITE} games played, your fastest time is:\n')
 
@@ -617,10 +637,10 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
                 f'Word Length: {Back.BLUE}{word_length_setting}{Back.BLACK}')
         if word_length_setting.lower() == 'small' or word_length_setting.lower() == 'regular':
             print(
-                f'Word Length: {Back.GREEN}{word_length_setting}{Back.BLACK}')
+                f'Word Length: {Back.GREEN}{Fore.BLACK}{word_length_setting}{Back.BLACK}{Fore.WHITE}')
         if word_length_setting.lower() == 'longer':
             print(
-                f'Word Length: {Back.YELLOW}{word_length_setting}{Back.BLACK}')
+                f'Word Length: {Back.YELLOW}{Fore.BLACK}{word_length_setting}{Back.BLACK}{Fore.WHITE}')
         if word_length_setting.lower() == 'greater' or word_length_setting.lower() == 'xtreme':
             print(
                 f'Word Length: {Back.RED}{word_length_setting}{Back.BLACK}')
@@ -655,7 +675,7 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
 
         start_time = time.time()  # record the start time
 
-        # print(launch_code)
+        print(launch_code)
         print()
 
         while counter > 0:
@@ -664,6 +684,9 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
             print(f'\n{display}\n')
 
             if '_ ' not in display:
+                pygame.mixer.music.stop()
+                pygame.mixer.music.load(victory_music_path)
+                pygame.mixer.music.play(-1)
                 # displays victory screen, press 'Q' to quit
                 start_screen()
                 end_time = time.time()  # Record the end time
@@ -677,7 +700,7 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
                 print_texture(takeoff_img)
                 time.sleep(.5)
                 print(f'\n{win_text}')
-                time.sleep(1)
+                time.sleep(2)
                 print(
                     f"{win_message}\nYou guessed the launch code, {Fore.CYAN}'{formatted_word}'{Fore.WHITE}!\nYou successfully launched into outer space!")
                 print(
@@ -750,6 +773,9 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
             end_time = time.time()  # Record the end time
             duration = end_time - start_time
             formatted_time = format_time(duration)
+            pygame.mixer.music.stop()
+            pygame.mixer.music.load(gameover_music_path)
+            pygame.mixer.music.play()
             start_screen1()
             display = display_letters(
                 launch_code, guessed_letters, game_difficulty, wrong_guesses)
@@ -850,6 +876,10 @@ def main_menu():
     time.sleep(1)
     print('\n')
     while True:
+        pygame.mixer.music.stop()
+        pygame.mixer.music.load(menu_music_path)
+        pygame.mixer.music.play(-1)
+
         print_texture(texture1)
         print()
         eftiwall_font = pyfiglet.figlet_format(text='9( ajy', font='eftiwall')
@@ -875,11 +905,12 @@ def main_menu():
 
         if choice == 'l':
             sleep('...')
-            lift_off_text = pyfiglet.figlet_format(
-                text='Lift Off!', font='isometric1')
-            print(lift_off_text)
-            sleep('...')
+            win_text = pyfiglet.figlet_format(
+                text="LIFT OFF", font="isometric1")
             print_texture(takeoff_img)
+            time.sleep(.5)
+            print(f'\n{win_text}')
+            time.sleep(2)
             sleep('...')
 
         elif choice == 'c':
