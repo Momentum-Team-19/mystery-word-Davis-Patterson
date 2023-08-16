@@ -709,7 +709,7 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
 
         start_time = time.time()  # record the start time
 
-        print(launch_code)
+        # print(launch_code)
         print()
 
         while counter > 0:
@@ -817,7 +817,7 @@ def play_game(filename, score_history, high_score, word_length_setting, game_dif
             ) + launch_code[1:].lower()
             print(f'\n{display}\n')
             game_over_text = pyfiglet.figlet_format(
-                text='GAME OVER', font='isometric2')
+                text='GAME OVER', font='poison')
             print(game_over_text)
             print(
                 f'\n{Fore.RED}MISSION FAILURE{Fore.WHITE}:\nThe launch code was: {Fore.CYAN}{formatted_word}{Fore.WHITE}\nYour rocket fell apart on the launch pad :(')
@@ -915,6 +915,7 @@ def main_menu():
     while True:
         pygame.mixer.music.stop()
         pygame.mixer.music.load(menu_music_path)
+        pygame.mixer.music.set_volume(0.2)
         pygame.mixer.music.play(-1)
 
         print_texture(texture1)
